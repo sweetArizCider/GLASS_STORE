@@ -680,6 +680,11 @@ UNLOCK TABLES;
 
 -- Dump completed on 2024-06-20 18:29:34
 
+
+
+
+-- triggers
+
 DELIMITER //
 CREATE TRIGGER after_insert_promocion_aplicada
 AFTER INSERT ON PROMOCIONES_APLICADAS
