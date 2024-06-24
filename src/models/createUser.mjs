@@ -1,6 +1,7 @@
-// src/models/createUser.mjs
-
+// uso de una pool de la base de datos
 import { pool } from "../config/mysqlConfig.mjs";
+
+// creando una funcion para exportar, la cual tiene el query necesario para ingresar el nuevo usuario a la base de datos
 
 export const crearUsuario = async (nombres, apellido_p, apellido_m, correo, telefono, contraseña) => {
     const connection = await pool.getConnection();
@@ -10,7 +11,7 @@ export const crearUsuario = async (nombres, apellido_p, apellido_m, correo, tele
         const queryPersona = 'INSERT INTO PERSONA (nombres, apellido_p, apellido_m, correo, telefono) VALUES (?, ?, ?, ?, ?)';
         const [personaResult] = await connection.execute(queryPersona, [nombres, apellido_p, apellido_m, correo, telefono]);
 
-        // Obtener el id_persona generado automáticamente
+        // Obtener el id_persona generado automaticamente
         const id_persona = personaResult.insertId;
 
         // Insertar en la tabla USUARIOS

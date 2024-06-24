@@ -2,5 +2,5 @@ import http from 'http';
 
 export const httpConfig = {
     port: 80,
-    hostname: 'localhost'
+    hostname: '192.168.1.75'
 }

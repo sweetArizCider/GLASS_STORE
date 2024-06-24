@@ -1,5 +1,3 @@
-// server.mjs
-
 import { httpConfig } from './config/httpConfig.mjs';
 import express from 'express';
 import registerRoute from './routes/register.mjs';
@@ -14,7 +12,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // Middleware para parsear application/json
 app.use(bodyParser.json());
-
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 app.use(express.static(path.join(__dirname, 'public')));
@@ -25,7 +22,7 @@ app.get('/', (req, res) => {
 });
 
 // Ruta para el registro de usuarios
-app.use('/register', registerRoute); // Aquí se debe usar '/register' y no solo 'register'
+app.use('/register', registerRoute);
 
 app.listen(httpConfig.port, httpConfig.hostname, () => {
     console.log(`Server running at http://${httpConfig.hostname}:${httpConfig.port}/`);

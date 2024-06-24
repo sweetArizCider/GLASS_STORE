@@ -1,8 +1,10 @@
-// src/controllers/validateCreateUser.mjs
-
 import { crearUsuario } from '../models/createUser.mjs';
 
+
+// funcion para crear un usuario
 export const register = async (req, res) => {
+
+    // traer datos del form
     const { nombres, apellido_p, apellido_m, correo, telefono, contraseña } = req.body;
 
     // Validación de campos requeridos
@@ -10,6 +12,8 @@ export const register = async (req, res) => {
         return res.status(400).send('Ingresa todos los datos correspondientes');
     }
 
+
+    // correr la funcion que contiene el query para insersion a la base de datos
     try {
         await crearUsuario(nombres, apellido_p, apellido_m, correo, telefono, contraseña);
         res.status(201).send('Usuario registrado correctamente');
