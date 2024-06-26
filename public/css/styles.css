@@ -1,7 +1,13 @@
+/*ajustes previos*/
 *{
   margin: 0;
   padding: 0;
 }
+body, html {
+  overflow-x: hidden;
+}
+
+
 /*  barra superior */
 .navbar-top{
   width: 100%;
@@ -135,6 +141,10 @@
   width: 100%;
   background-color: #132644;
   margin-top: 100px;
+  margin-right: 0;
+  margin-left: 0;
+  background-size: cover;
+  background-position: 70%;
 }
 #footer h1{
   color: white;
