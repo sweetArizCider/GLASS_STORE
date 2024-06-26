@@ -1,95 +1,185 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
-
-body {
+*{
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
 }
-.nav-link {
-  font-family: Inter;
-  color: #fff !important;
-  font-weight: 500;
-}
-
-
-.logo {
-  width: 120px;
-  margin-left: 3em;
-  
-}
-.navIcon{
-  width: 25px;
-
-}
-.left{
-  margin-left: 2em;
-}
-.icons{
-  margin-right: 3.5em;
-}
-
-
-.hero::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
+/*  barra superior */
+.navbar-top{
   width: 100%;
-  height: 80%;
-  background: linear-gradient(180deg, rgba(19, 38, 68, 0.4) 7%, rgba(19, 38, 68, 0.27) 93%), url("../img/WhatsApp\ Image\ 2024-06-14\ at\ 2.15.26\ PM.jpeg") center/cover no-repeat;
-  z-index: -1;
-}
-.hero{
-  padding-top: 1%;
-}
-
-
-.heroContainer{
-  width: 44.6%;
-  max-width: 800px;
-  display: grid;
-  grid-auto-rows: max-content;
-  align-content: center;
-  gap: 1em;
-  padding-top: 4em;
-  padding-bottom: 100px;
+  height: 10vh;
+  display: flex;
+  align-items: center;
   text-align: center;
-  margin: auto;
-  color: #fff;
-
+  justify-content: space-between;
 }
-.heroTitle{
-  font-size: 3rem;
-  font-family: Montserrat;
-  font-weight: 800;
+.social-link i img{
+  margin-left: 10px;
+  transition: 0.5s ease;
+  cursor: pointer;
 }
-.heroTitle span{
-  font-size: 1.6rem; 
-  font-weight: 600;
-}
-.heroSub{
-  width: 87%;
-  display: grid;
-  grid-auto-rows: max-content;
-  align-content: center;
-  gap: 1em;
-  text-align: center;
-  margin: auto;
-}
-.heroParagraph{
-  font-family: Inter;
-  font-size: 1rem;
-  margin-bottom: 20px;
-}
-.cta{
-  display: inline-block;
+.social-link i img:hover{
   background-color: #132644;
-  justify-self: center;
-  color: white;
-  text-decoration: none;
-  padding: 10px 50px;
-  border-radius: 30px;
-  font-family: Inter;
+  border-radius: 50px;
+}
+.logo{
+  width: 130px;
+}
 
+.logo h3{
+  font-weight: bold;
+}
+
+.icons i img{
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+
+/* imagen de fondo" */
+.main-content{
+  width: 100%;
+  height: 90vh;
+  background-image: url(../img/index/background.jpeg);
+  background-size: cover;
+  background-position: 70%;
+}
+
+/* segunda barra */
+#navbar-color{
+  background-color: #132644;
+}
+.navbar-nav{
+  margin: auto;
+}
+.nav-link{
+  margin-left: 30px;
+  font-weight: bold;
+  color: #fff !important;
+  transition: 0.5s ease;
+  cursor: pointer;
+}
+
+
+/* inicio del main */
+.content{
+  margin-top: 150px;
+  margin-left: 60px;
+}
+.content h1{
+  font-size: 50px;
+}
+#btn1 button{
+  width: 150px;
+  height: 32px;
+  background: transparent;
+  border: 1px solid black;
+  letter-spacing: 3px;
+  font-weight: bold;
+  transition: 0.5s ease;
+  cursor: pointer;
+}
+#btn1 button:hover{
+  background-color: green;
+}
+
+#btn2 button{
+  width: 100px;
+  height: 30px;
+  background: transparent;
+  border: 1px solid black;
+  transition: 0.5s ease;
+  cursor: pointer;
+}
+#btn2 button:hover{
+  background-color: rgba(238,224,208);
+}
+
+#tpc{
+  box-shadow: 0 0 5px black;
+  transition: 0.5s ease;
+  cursor: pointer;
+}
+#tpc:hover{
+  transform: translateY(-10px);
+}
+
+#c p{
+  font-weight: bold;
+}
+#btn3{
+  text-align: center;
+}
+#btn3 button{
+  width: 150px;
+  height: 30px;
+  background: transparent;
+  border: 1px solid black;
+  transition: 0.5s ease;
+  cursor: pointer;
+}
+#btn3 button:hover{
+  background-color: rgba(238,224,208);
+}
+
+#btn4 button{
+  width: 150px;
+  height: 30px;
+  background: transparent;
+  border: 1px solid black;
+  transition: 0.5s ease;
+  cursor: pointer;
+}
+#btn4 button:hover{
+  background-color: rgba(238,224,208);
+}
+#footer{
+  width: 100%;
+  background-color: #132644;
+  margin-top: 100px;
+}
+#footer h1{
+  color: white;
+  padding-top: 30px;
+}
+#footer p{
+  color: white;
+}
+.icons i{
+  color: rgba(238,224,208);
+  font-size: 30px;
+  cursor: pointer;
+}
+.copyright{
+  color: white;
+  margin-top: 20px;
+}
+.credite{
+  color: white;
+}
+
+/* boton flotante de whatsapp */
+#wa-button {
+  position: fixed; 
+  bottom: 20px; 
+  right: 20px; 
+  z-index: 100; 
+}
+
+#wa-button a {
+  display: block; 
+  width: 50px; 
+  height: 50px; 
+  border-radius: 50%; 
+  background-color: #25d365; 
+  text-decoration: none;
+  color: white; 
+  transition: background-color 0.3s ease; 
+}
+
+#wa-button a:hover {
+  background-color: #1abc9c; 
+}
+
+#wa-button img {
+  width: 100%; 
+  height: auto; 
 }

@@ -1,59 +1,314 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Glass Store</title>
-  <link rel="shortcut icon" href="../img/Screenshot 2024-06-24 180950.png" type="image/x-icon">
-  <link rel="stylesheet" href="../css/bootstrap-5.3.3-dist/css/bootstrap.min.css">
-  <link rel="stylesheet" href="../css/styles.css">
-  <link rel="stylesheet" href="../css/normalized.css">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Glass Store</title>
+    <link rel="shortcut icon" href="../img/index/logoVarianteSmall.png" type="image/x-icon">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/bootstrap-5.3.3-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/normalized.css">
+
 </head>
 <body>
-  <header class="hero">
-    <nav class="navbar navbar-expand-lg navbar-custom">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="#">
-          <img class="logo" src="../img/Screenshot 2024-06-15 122853.png" alt="Logo">
-        </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse justify-content-center">
-          <ul class="navbar-nav">
-            <li class="nav-item">
-              <a class="nav-link" href="#">Contacto</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link left" href="#">Productos</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link left" href="#">Nosotros</a>
-            </li>
-          </ul>
+   <!-- whatsapp flotante -->
+  <div id="wa-button">
+    <a href="https://api.whatsapp.com/send?phone=525512345678" target="_blank">
+      <img src="../img/index/whatsapp.svg" alt="Contáctanos por WhatsApp">
+    </a>
+  </div>
+    <!-- barra superior -->
+    <div class="container">
+        <div class="navbar-top">
+            <div class="social-link">
+                <i><img src="../img/index/whatsapp.svg" alt="" width="30px"></i>
+                <i><img src="../img/index/facebook.svg" alt="" width="30px"></i>
+                <i><img src="../img/index/instagram.svg" alt="" width="30px"></i>
+            </div>
+            <div class="logo">
+                <img src="../img/index/logoGlassStore.png" alt="" class="logo">
+            </div>
+            <div class="icons">
+                <i><img src="../img/index/search.svg" alt="" width="20px"></i>
+                <i><img src="../img/index/favorites.svg" alt="" width="20px"></i>
+                <i><img src="../img/index/user.svg" alt="" width="25px"></i>
+            </div>
         </div>
-        <div class="d-flex icons align-items-center">
-          <img src="../img/search.svg" alt="Search Icon" class="navIcon">
-          <img src="../img/fav.svg" alt="Favorites Icon" class="navIcon left">
-          <img src="../img/user.svg" alt="User Icon" class="navIcon left">
-        </div>
-      </div>
-    </nav>
-<!--Banner-->
-    <div class="heroContainer">
-      <h1 class="heroTitle"> <span>TRANSFORMA TU ESPACIO CON</span> <br>
-        ESTILO Y DISTINCIÓN</h1>
-        <div class="heroSub">
-          <p class="heroParagraph">Dale un toque único a tu espacio con nuestros productos <br> de alta calidad. Soluciones elegantes y personalizadas <br> para tu hogar o negocio.</p>
-        </div>
-        <a href="" class="cta">Contactanos</a>
     </div>
-  </header>
-  <main>
-    
-  </main>
+
+    <!-- barra 2 -->
+    <div class="main-content">
+        <nav class="navbar navbar-expand-md" id="navbar-color">
+           <div class="container">
+            <!-- menu hamburguesita -->
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+              <span><i><img src="../img/index/menu.svg" alt="" width="30px"></i></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="collapsibleNavbar">
+              <ul class="navbar-nav">
+                <li class="nav-item">
+                  <a class="nav-link" href="#">Contactanos</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">Productos</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">Agendar Cita</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">Nosotros</a>
+                </li>
+              </ul>
+            </div>
+           </div> 
+          </nav>
+
+
+          <div class="content">
+            <h1>Transforma tu espacio con
+                <br>estilo y distincion
+            </h1>
+            <p>Dale un toque único a tu espacio con nuestros productos de alta calidad. Soluciones elegantes y personalizadas para tu hogar o negocio.</p>
+            <div id="btn1"><button>Contactanos</button></div>
+          </div>
+          
+    </div>
+
+    <!-- categorias -->
+    <div class="container">
+        <h3 class="text-center" style="padding-top: 30px;">Principales Categorias</h3>
+        <div class="row" style="margin-top: 50px;">
+            <div class="col-md-4 py-3 py-md-0">
+                <div class="card">
+                    <img src="../img/index/persinasCategoria.jpg" alt="" class="card image-top" height="200px">
+                    <div class="card-body">
+                        <h5 class="card-titel text-center">Persianas</h5>
+                        <p class="text-center">Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam ipsam vitae facere eius modi iure possimus, soluta ea inventore. Omnis!</p>
+                        <div id="btn2" class="text-center"><button>Ver más</button></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 py-3 py-md-0">
+                <div class="card">
+                    <img src="../img/index/Cancel.png" alt="" class="card image-top" height="200px">
+                    <div class="card-body">
+                        <h5 class="card-titel text-center">Vidrio Templado</h5>
+                        <p class="text-center">Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam ipsam vitae facere eius modi iure possimus, soluta ea inventore. Omnis!</p>
+                        <div id="btn2" class="text-center"><button>Ver más</button></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 py-3 py-md-0">
+                <div class="card">
+                    <img src="../img/index/PapelTapiz.png" alt="" class="card image-top" height="200px">
+                    <div class="card-body">
+                        <h5 class="card-titel text-center">Papel Tapiz</h5>
+                        <p class="text-center">Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam ipsam vitae facere eius modi iure possimus, soluta ea inventore. Omnis!</p>
+                        <div id="btn2" class="text-center"><button>Ver más</button></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Agendar cita -->
+    <div class="container">
+        <h1 class="text-center" style="margin-top: 50px;">Para pedidos personalizados</h1>
+        <div class="row" style="margin-top: 50px;">
+            <div class="col-md-6 py-3 py-md-0">
+                <div class="card">
+                    <img src="../img/index/index/agendar.png" alt="" style="width: 100%;">
+                </div>
+            </div>
+            <div class="col-md-6 py-3 py-md-0">
+                <p>AGENDA AHORA !</p>
+                <div class="row">
+                    <div class="col-1">
+                        <img src="../img/index/star.svg" alt="">
+                    </div>
+                    <div class="col-1">
+                        <img src="../img/index/star.svg" alt="">
+                    </div>
+                    <div class="col-1">
+                        <img src="../img/index/star.svg" alt="">
+                    </div>
+                    <div class="col-1">
+                        <img src="../img/index/star.svg" alt="">
+                    </div>
+                    <div class="col-1">
+                        <img src="../img/index/star.svg" alt="">
+                    </div>
+                </div>
+                <p>Obtén asesoramiento personalizado para transformar tu espacio con nuestras soluciones en vidrio templado, persianas, papel tapiz y herrajes. ¡Reserva tu cita ahora!</p>
+                <div id="btn4"><button>Agendar</button></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Algunos produtos -->
+    <div class="container">
+        <h3 class="text-center" style="margin-top: 50px;">Mas Vendidos</h3>
+        <div class="row" style="margin-top: 50px;">
+            <div class="col-md-3 py-3 py-md-0">
+                <div class="card" id="c">
+                    <img src="../img/index/persinasCategoria.jpg" alt="" class="card image-top">
+                    <div class="card-body">
+                        <h3 class="card-titel text-center">Persiana Sheer Elegance</h3>
+                        <p class="card-text text-center">$2500</p>
+                        <div id="btn3"><button>Cotizar</button></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 py-3 py-md-0">
+                <div class="card" id="c">
+                    <img src="../img/index/espejo.png" alt="" class="card image-top">
+                    <div class="card-body">
+                        <h3 class="card-titel text-center">Espejo para baño con luz</h3>
+                        <p class="card-text text-center">$600</p>
+                        <div id="btn3"><button>Cotizar</button></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 py-3 py-md-0">
+                <div class="card" id="c">
+                    <img src="../img/index/pasamanos.png" alt="" class="card image-top">
+                    <div class="card-body">
+                        <h3 class="card-titel text-center">Pasamanos para Escalera</h3>
+                        <p class="card-text text-center">$1200</p>
+                        <div id="btn3"><button>Cotizar</button></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 py-3 py-md-0">
+                <div class="card" id="c">
+                    <img src="../img/index/PapelTapiz.png" alt="" class="card image-top">
+                    <div class="card-body">
+                        <h3 class="card-titel text-center">Papel Tapiz</h3>
+                        <p class="card-text text-center">$650 m</p>
+                        <div id="btn3"><button>Cotizar</button></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    <!-- sobre nosotros -->
+    <div class="container">
+        <h1 class="text-center" style="margin-top: 50px;">Sobre Nosotros</h1>
+        <div class="row" style="margin-top: 50px;">
+            <div class="col-md-6 py-3 py-md-0">
+                <div class="card">
+                    <img src="../img/index/Cancel.png" alt="">
+                </div>
+            </div>
+            <div class="col-md-6 py-3 py-md-0">
+                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Laborum, saepe possimus quo, quasi animi natus nulla beatae neque soluta pariatur id ducimus eum, sed quis enim minima? Fugiat delectus quo optio nemo voluptatem ullam officiis neque exercitationem tenetur eum corporis quas in esse blanditiis, quasi animi nam eos! Tempora deleniti eligendi magni ex voluptatum ut dicta nemo et.</p>
+            </div>
+        </div>
+    </div>
+    <!-- Historias de clientes -->
+     <div class="container">
+              <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                  <div class="carousel-item active" data-id="1">
+                    <div class="row">
+                      <div class="col-md-8">
+                        <div class="testimonyText">
+                          <h2 class="subtitle">Mi nombre es Jordan Alexander, <span class="testimonyCourse">Estudiante de CSS</span></h2>
+                          <p class="testimonyReview">Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit qui dicta enim quas facere rerum perferendis, sapiente neque beatae a quisquam at. Eveniet esse id architecto perferendis amet nam reprehenderit.</p>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <figure class="testimonyPicture">
+                          <img src="../img/index/PapelTapiz.png" alt="Foto de Jordan Alexander" class="img-fluid testimonyImg">
+                        </figure>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="carousel-item" data-id="2">
+                    <div class="row">
+                      <div class="col-md-8">
+                        <div class="testimonyText">
+                          <h2 class="subtitle">Mi nombre es Alejandra Puente, <span class="testimonyCourse">Estudiante de CSS</span></h2>
+                          <p class="testimonyReview">Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit qui dicta enim quas facere rerum perferendis, sapiente neque beatae a quisquam at. Eveniet esse id architecto perferendis amet nam reprehenderit.</p>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <figure class="testimonyPicture">
+                          <img src="../img/index/pasamanos.png" alt="Foto de Alejandra Puente" class="img-fluid testimonyImg">
+                        </figure>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="carousel-item" data-id="3">
+                    <div class="row">
+                      <div class="col-md-8">
+                        <div class="testimonyText">
+                          <h2 class="subtitle">Mi nombre es Karen Arteaga, <span class="testimonyCourse">Estudiante de CSS</span></h2>
+                          <p class="testimonyReview">Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit qui dicta enim quas facere rerum perferendis, sapiente neque beatae a quisquam at. Eveniet esse id architecto perferendis amet nam reprehenderit.</p>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <figure class="testimonyPicture">
+                          <img src="../img/index/Cancel.png" alt="Foto de Karen Arteaga" class="img-fluid testimonyImg">
+                        </figure>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="carousel-item" data-id="4">
+                    <div class="row">
+                      <div class="col-md-8">
+                        <div class="testimonyText">
+                          <h2 class="subtitle">Mi nombre es Kevin Ramos, <span class="testimonyCourse">Estudiante de CSS</span></h2>
+                          <p class="testimonyReview">Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit qui dicta enim quas facere rerum perferendis, sapiente neque beatae a quisquam at. Eveniet esse id architecto perferendis amet nam reprehenderit.</p>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <figure class="testimonyPicture">
+                          <img src="../img/index/espejo.png" alt="Foto de Kevin Ramos" class="img-fluid testimonyImg">
+                        </figure>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Next</span>
+                </button>
+              </div>
+            
+          
+     </div>
+    <!-- footer -->
+    <footer id="footer">
+        <img src="../img/index/logoGlassStore.png" alt="" style="width: 150px;">
+        <p class="text-center">Transforma tu espacio con estilo y distincion</p>
+        <div class="row">
+            <div class="col-3 offset-1">
+                <a href="">Productos</a><br>
+                <a href="">Nosotros</a><br>
+                <a href="">Contactanos</a><br>
+                <a href="">Agendar cita</a><br>
+            </div>
+            <div class="col-3 offset-1">
+
+            </div>
+        </div>
+    </footer>
+    <!-- footer -->
+
+
+
+
 </body>
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script src="../css/bootstrap-5.3.3-dist/js/bootstrap.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+
 </html>
