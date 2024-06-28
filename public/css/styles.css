@@ -499,3 +499,10 @@ mark{
 .space-cero{
   margin-top: -1em;
 }
+/*modal*/
+.boton-modal{
+  padding: 10px 10px;
+  height: 6vh;
+  width: 200px;
+  font-size: .9rem;
+}
