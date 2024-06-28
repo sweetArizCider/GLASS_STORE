@@ -15,7 +15,7 @@
    <!-- whatsapp flotante -->
   <div id="wa-button">
     <a href="https://api.whatsapp.com/send?phone=8717843809" target="_blank">
-      <img src="../img/index/whatsapp.svg" alt="Contáctanos por WhatsApp">
+      <img src="../img/index/whatsappFloat.svg" alt="Contáctanos por WhatsApp">
     </a>
   </div>
     <!-- barra superior -->
@@ -36,45 +36,47 @@
             </div>
         </div>
     </div>
+    <!-- segunda barra -->
+    <nav class="navbar sticky-top navbar-expand-md" id="navbar-color">
+      <div class="container">
+       <!-- menu hamburguesita -->
+       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+         <span><i><img src="../img/index/menu.svg" alt="" width="30px"></i></span>
+       </button>
 
-    <!-- barra 2 -->
-    <div class="main-content">
-        <nav class="navbar navbar-expand-md" id="navbar-color">
-           <div class="container">
-            <!-- menu hamburguesita -->
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
-              <span><i><img src="../img/index/menu.svg" alt="" width="30px"></i></span>
-            </button>
-
-            <div class="collapse navbar-collapse" id="collapsibleNavbar">
-              <ul class="navbar-nav">
-                <li class="nav-item">
-                  <a class="nav-link" href="https://api.whatsapp.com/send?phone=8717843809" target="_blank">Contacto</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link nav-left" href="#">Productos</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link nav-left" href="#">Agendar</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link nav-left" href="#">Nosotros</a>
-                </li>
-              </ul>
-            </div>
-           </div> 
-          </nav>
+       <div class="collapse navbar-collapse" id="collapsibleNavbar">
+         <ul class="navbar-nav">
+           <li class="nav-item">
+             <a class="nav-link" href="https://api.whatsapp.com/send?phone=8717843809" target="_blank">Contacto</a>
+           </li>
+           <li class="nav-item">
+             <a class="nav-link nav-left" href="#">Productos</a>
+           </li>
+           <li class="nav-item">
+             <a class="nav-link nav-left" href="#">Agendar</a>
+           </li>
+           <li class="nav-item">
+             <a class="nav-link nav-left" href="#">Nosotros</a>
+           </li>
+         </ul>
+       </div>
+      </div> 
+     </nav>
 
 
-          <div class="content">
-            <h1>TRANSFORMA TU ESPACIO <br> CON
-                ESTILO Y DISTINCION
-            </h1>
-            <p>Dale un toque único a tu espacio con nuestros <br> productos de alta calidad. Soluciones elegantes y <br> personalizadas para tu hogar o negocio.</p>
-            <div id="btn1" ><button class="banner-boton">Contáctanos</button></div>
-          </div>
-          
-    </div>
+    <!-- banner -->
+     <main>
+      <div class="main-content">
+        <div class="content">
+          <h1>TRANSFORMA TU ESPACIO <br> CON
+              ESTILO Y DISTINCION
+          </h1>
+          <p>Dale un toque único a tu espacio con nuestros <br> productos de alta calidad. Soluciones elegantes y <br> personalizadas para tu hogar o negocio.</p>
+          <div id="btn1" ><button class="banner-boton">Contáctanos</button></div>
+        </div> 
+      </div>
+     </main>
+    
 
     <!-- categorias -->
     <div class="container">
@@ -154,7 +156,7 @@
                         <img src="../img/index/star.svg" alt="">
                     </div>
                 </div>
-                <p>Obtén asesoramiento personalizado para transformar tu espacio con nuestras soluciones en vidrio templado, persianas, papel tapiz y herrajes. ¡Reserva tu cita ahora!</p>
+                <p class="testimonyReview">Obtén asesoramiento personalizado para transformar tu espacio con nuestras soluciones en vidrio templado, persianas, papel tapiz y herrajes. ¡Reserva tu cita ahora!</p>
                 <div id="btn4"><button class="agendar-boton">Agendar</button></div>
             </div>
         </div>
@@ -168,132 +170,134 @@
         <div class="row" style="margin-top: 50px;">
             <div class="col-md-3 py-3 py-md-0">
                 <div class="card" id="c">
-                    <img src="../img/index/persinasCategoria.jpg" alt="" class="card image-top img-card">
+                    <img src="../img/index/persianaGris.jpeg" alt="" class="card image-top img-card">
                     <div class="icon-overlay-container" onclick="changeIcon(this)">
                       <img src="../img/index/addFavorites.svg" alt="" class="icon-overlay">
                     </div>
                     <div class="card-body">
-                        <h3 class="card-titel text-center">Persiana Sheer Elegance</h3>
-                        <p class="card-text text-center">$2500</p>
-                        <div id="btn3"><button>Cotizar</button></div>
+                        <h3 class="card-titel text-center title-card-new">Persiana Sheer Elegance</h3>
+                        <p class="card-text text-center card-price">$2500</p>
+                        <div id="btn3"><button class="boton-mini">Cotizar</button></div>
                     </div>
                 </div>
             </div>
             <div class="col-md-3 py-3 py-md-0">
                 <div class="card" id="c">
-                    <img src="../img/index/espejo.png" alt="" class="card image-top img-card">
+                    <img src="../img/index/espejoParedBaldosaOscuraConLavabo.jpeg" alt="" class="card image-top img-card">
                     <div class="icon-overlay-container" onclick="changeIcon(this)">
                       <img src="../img/index/addFavorites.svg" alt="" class="icon-overlay">
                     </div>
                     <div class="card-body">
-                        <h3 class="card-titel text-center">Espejo para baño con luz</h3>
-                        <p class="card-text text-center">$600</p>
-                        <div id="btn3"><button>Cotizar</button></div>
+                        <h3 class="card-titel text-center title-card-new">Espejo para baño con luz</h3>
+                        <p class="card-text text-center card-price">$600</p>
+                        <div id="btn3"><button class="boton-mini">Cotizar</button></div>
                     </div>
                 </div>
             </div>
             <div class="col-md-3 py-3 py-md-0">
                 <div class="card" id="c">
-                    <img src="../img/index/pasamanos.png" alt="" class="card image-top img-card">
+                    <img src="../img/index/agendar.png" alt="" class="card image-top img-card">
                     <div class="icon-overlay-container" onclick="changeIcon(this)">
                       <img src="../img/index/addFavorites.svg" alt="" class="icon-overlay">
                     </div>
                     <div class="card-body">
-                        <h3 class="card-titel text-center">Pasamanos para Escalera</h3>
-                        <p class="card-text text-center">$1200</p>
-                        <div id="btn3"><button>Cotizar</button></div>
+                        <h3 class="card-titel text-center title-card-new">Pasamanos para Escalera</h3>
+                        <p class="card-text text-center card-price">$1200</p>
+                        <div id="btn3"><button class="boton-mini">Cotizar</button></div>
                     </div>
                 </div>
             </div>
             <div class="col-md-3 py-3 py-md-0">
                 <div class="card" id="c">
-                    <img src="../img/index/PapelTapiz.png" alt="" class="card image-top img-card">
+                    <img src="../img/index/tapizRosa.jpeg" alt="" class="card image-top img-card">
                     <div class="icon-overlay-container" onclick="changeIcon(this)">
                       <img src="../img/index/addFavorites.svg" alt="" class="icon-overlay">
                     </div>
                     <div class="card-body">
-                        <h3 class="card-titel text-center">Papel Tapiz</h3>
-                        <p class="card-text text-center">$650 m</p>
-                        <div id="btn3"><button>Cotizar</button></div>
+                        <h3 class="card-titel text-center title-card-new">Papel Tapiz</h3>
+                        <p class="card-text text-center card-price">$650 m</p>
+                        <div id="btn3"><button class="boton-mini">Cotizar</button></div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
     <!-- sobre nosotros -->
-    <div class="container">
-        <h1 class="text-center subtitle-main" style="margin-top: 50px;">Sobre Nosotros</h1>
-        <div class="row" style="margin-top: 50px;">
+    <div class="container nosotros">
+        <h1 class="text-center title-nosotros" style="margin-top: 50px;">Sobre Nosotros</h1>
+        <div class="row alinear" style="margin-top: 50px;">
             <div class="col-md-6 py-3 py-md-0">
-                <div class="card">
-                    <img src="../img/index/Cancel.png" alt="">
+                <div class="alinear d-flex justify-content-center">
+                    <img src="../img/index/persianaPlantas.jpeg " class="img-nosotros" alt="">
                 </div>
             </div>
             <div class="col-md-6 py-3 py-md-0">
-                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Laborum, saepe possimus quo, quasi animi natus nulla beatae neque soluta pariatur id ducimus eum, sed quis enim minima? Fugiat delectus quo optio nemo voluptatem ullam officiis neque exercitationem tenetur eum corporis quas in esse blanditiis, quasi animi nam eos! Tempora deleniti eligendi magni ex voluptatum ut dicta nemo et.</p>
+                <p class="text-nosotros">En Glass Storee,<mark> nos especializamos en ofrecer soluciones de alta calidad </mark> para la decoración y renovación de hogares y negocios. <br><br>  <mark>Con años de experiencia en el sector </mark>, nuestro objetivo es transformar espacios con productos innovadores y elegantes como vidrio templado, persianas, papel tapiz y herrajes.</p>
+                  <img src="../img/index/GLASS.png" alt="" class="logo">
             </div>
         </div>
     </div>
     <!-- Historias de clientes -->
-     <div class="container">
+    <h1 class="text-center subtitle-main" style="margin-top: 50px;" >Historias de Clientes</h1>
+     <div class="container" style="width: 80%;">
               <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
                 <div class="carousel-inner">
-                  <div class="carousel-item active" data-id="1">
+                  <div class="carousel-item active container-historias" data-id="1">
                     <div class="row">
                       <div class="col-md-8">
                         <div class="testimonyText">
-                          <h2 class="subtitle">Mi nombre es Jordan Alexander, <span class="testimonyCourse">Estudiante de CSS</span></h2>
-                          <p class="testimonyReview">Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit qui dicta enim quas facere rerum perferendis, sapiente neque beatae a quisquam at. Eveniet esse id architecto perferendis amet nam reprehenderit.</p>
+                          <h2 class="subtitle">Familia González</h2>
+                          <p class="testimonyReview">Las puertas corredizas y divisores de ambientes de Glass Store optimizaron el espacio del hogar de la familia González, creando un ambiente más funcional y versátil. ¡Ahora disfrutan de un hogar con mayor fluidez y amplitud!</p>
                         </div>
                       </div>
                       <div class="col-md-4">
                         <figure class="testimonyPicture">
-                          <img src="../img/index/PapelTapiz.png" alt="Foto de Jordan Alexander" class="img-fluid testimonyImg">
+                          <img src="../img/index/barandalTerrazaBar.jpeg" alt="Barandal de vidrio" class="img-fluid testimonyImg">
                         </figure>
                       </div>
                     </div>
                   </div>
-                  <div class="carousel-item" data-id="2">
+                  <div class="carousel-item container-historias" data-id="2">
                     <div class="row">
                       <div class="col-md-8">
                         <div class="testimonyText">
-                          <h2 class="subtitle">Mi nombre es Alejandra Puente, <span class="testimonyCourse">Estudiante de CSS</span></h2>
-                          <p class="testimonyReview">Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit qui dicta enim quas facere rerum perferendis, sapiente neque beatae a quisquam at. Eveniet esse id architecto perferendis amet nam reprehenderit.</p>
+                          <h2 class="subtitle">Familia Pérez</h2> <br>
+                          <p class="testimonyReview">La familia Pérez transformó su hogar con Glass Store, instalando una pared de vidrio templado, persianas motorizadas y papel tapiz texturizado. "Nuestra casa ahora es moderna y acogedora. <br> ¡Estamos encantados con el resultado!" <br> – Familia Pérez.</p>
                         </div>
                       </div>
                       <div class="col-md-4">
                         <figure class="testimonyPicture">
-                          <img src="../img/index/pasamanos.png" alt="Foto de Alejandra Puente" class="img-fluid testimonyImg">
+                          <img src="../img/index/cancelMarcoDoradoLavaboPlanta.jpeg" alt="Cancel con marco dorado" class="img-fluid testimonyImg">
                         </figure>
                       </div>
                     </div>
                   </div>
-                  <div class="carousel-item" data-id="3">
+                  <div class="carousel-item container-historias" data-id="3">
                     <div class="row">
                       <div class="col-md-8">
                         <div class="testimonyText">
-                          <h2 class="subtitle">Mi nombre es Karen Arteaga, <span class="testimonyCourse">Estudiante de CSS</span></h2>
-                          <p class="testimonyReview">Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit qui dicta enim quas facere rerum perferendis, sapiente neque beatae a quisquam at. Eveniet esse id architecto perferendis amet nam reprehenderit.</p>
+                          <h2 class="subtitle">Familia López</h2> <br>
+                          <p class="testimonyReview">Los López soñaban con un hogar moderno y acogedor. Glass Store lo hizo realidad con persianas motorizadas, papel tapiz texturizado, barandales de cristal, pasamanos ergonómicos, espejos y repisas funcionales. El resultado: un espacio transformado, lleno de luz, estilo y funcionalidad. La familia López está encantada y recomienda Glass Store.</p>
                         </div>
                       </div>
                       <div class="col-md-4">
                         <figure class="testimonyPicture">
-                          <img src="../img/index/Cancel.png" alt="Foto de Karen Arteaga" class="img-fluid testimonyImg">
+                          <img src="../img/index/barandalExteriorCasaBlanca.jpeg" alt="Barandal de cristal para terraza exterior" class="img-fluid testimonyImg">
                         </figure>
                       </div>
                     </div>
                   </div>
-                  <div class="carousel-item" data-id="4">
+                  <div class="carousel-item container-historias" data-id="4">
                     <div class="row">
                       <div class="col-md-8">
                         <div class="testimonyText">
-                          <h2 class="subtitle">Mi nombre es Kevin Ramos, <span class="testimonyCourse">Estudiante de CSS</span></h2>
-                          <p class="testimonyReview">Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit qui dicta enim quas facere rerum perferendis, sapiente neque beatae a quisquam at. Eveniet esse id architecto perferendis amet nam reprehenderit.</p>
+                          <h2 class="subtitle">Familia López</h2> <br>
+                          <p class="testimonyReview">Las luminarias de Glass Store llenaron de luz y estilo el hogar de la familia Martínez, creando ambientes cálidos y acogedores. ¡Ahora disfrutan de un espacio iluminado y acogedor</p>
                         </div>
                       </div>
                       <div class="col-md-4">
                         <figure class="testimonyPicture">
-                          <img src="../img/index/espejo.png" alt="Foto de Kevin Ramos" class="img-fluid testimonyImg">
+                          <img src="../img/index/persianaGimnasio.jpeg" alt="Persianas dentro de un gimnasio" class="img-fluid testimonyImg">
                         </figure>
                       </div>
                     </div>
@@ -311,53 +315,45 @@
             
           
      </div>
-    <!-- footer -->
-    <footer id="footer">
-        <img src="../img/index/logoGlassStore.png" alt="" style="width: 150px;">
-        <p class="text-center">Transforma tu espacio con estilo y distincion</p>
-        <div class="row">
-            <div class="col-3 offset-1">
-                <a href="">Productos</a><br>
-                <a href="">Nosotros</a><br>
-                <a href="">Contactanos</a><br>
-                <a href="">Agendar cita</a><br>
-            </div>
-            <div class="col-3 offset-1">
 
+    <!-- footer -->
+    <footer class="footer">
+      <div class="container">
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <h5>Misión</h5>
+                <p>Transformar espacios con soluciones innovadoras y elegantes para el diseño de interiores, creando hogares y negocios funcionales, acogedores y que reflejen el estilo único de cada cliente.</p>
+            </div>
+            <div class="col-md-4 mb-3">
+                <h5>Links</h5>
+                <ul class="list-unstyled">
+                    <li><a href="#" class="text-white">Contacto</a></li>
+                    <li><a href="#" class="text-white">Productos</a></li>
+                    <li><a href="#" class="text-white">Agendar</a></li>
+                    <li><a href="#" class="text-white">Nosotros</a></li>
+                </ul>
+            </div>
+            <div class="col-md-4 mb-3">
+                <h5>Contáctanos</h5>
+                <p><i class="bi bi-geo-alt"></i>Torreón Coahuila, México</p>
+                <p><i class="bi bi-envelope"></i> glassstore@gmail.com</p>
+                <p><i class="bi bi-phone"></i> +52 123 4564 456</p>
             </div>
         </div>
+    </div>
+    <div class="copy text-center py-3 w-100">
+      <p class="mb-0">&copy; 2024 Glass Store. All rights reserved.</p>
+    </div>
     </footer>
-    <!-- footer 2
-
+   
+<!-- footer
     <footer class="bg-dark text-white mt-5">
-      <div class="container-fluid py-4">
-          <div class="row">
-              <div class="col-md-4 mb-3">
-                  <h5>About Us</h5>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
-              </div>
-              <div class="col-md-4 mb-3">
-                  <h5>Links</h5>
-                  <ul class="list-unstyled">
-                      <li><a href="#" class="text-white">Home</a></li>
-                      <li><a href="#" class="text-white">Services</a></li>
-                      <li><a href="#" class="text-white">Contact</a></li>
-                      <li><a href="#" class="text-white">About</a></li>
-                  </ul>
-              </div>
-              <div class="col-md-4 mb-3">
-                  <h5>Contact Us</h5>
-                  <p><i class="bi bi-geo-alt"></i> 1234 Street Name, City, State</p>
-                  <p><i class="bi bi-envelope"></i> email@example.com</p>
-                  <p><i class="bi bi-phone"></i> (123) 456-7890</p>
-              </div>
-          </div>
-      </div>
+      
       <div class="bg-secondary text-center py-3 w-100">
           <p class="mb-0">&copy; 2024 Your Company. All rights reserved.</p>
       </div>
   </footer>
--->
+ -->
 
 </body>
 
@@ -368,9 +364,9 @@
   function changeIcon(container) {
       const icon = container.querySelector('img.icon-overlay');
       if (icon.src.includes('addFavorites.svg')) {
-          icon.src = '../img/index/heartCover.svg'; // Cambia a la ruta de la nueva imagen
+          icon.src = '../img/index/heartCover.svg'; 
       } else {
-          icon.src = '../img/index/addFavorites.svg'; // Vuelve a la imagen original si ya se había cambiado
+          icon.src = '../img/index/addFavorites.svg'; 
       }
   }
 </script>
