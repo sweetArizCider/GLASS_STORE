@@ -7,6 +7,10 @@ body, html {
   padding: 0;
   height: 100%;
   overflow-x: hidden;
+  font-size: 1rem; 
+}
+html {
+  scroll-behavior: smooth;
 }
 
 /*  barra superior */
@@ -76,8 +80,33 @@ body, html {
 .nav-left{
   margin-left: 7em;
 }
-
-
+.offcanvas {
+  width: 250px;
+  background-color: #132644 !important;
+  color: #fff !important; 
+}
+.offcanvas-start {
+  width: 250px;
+  background-color: #132644;
+}
+.offcanvas-body {
+  padding: 0;
+}
+.offcanvas-body .nav-link {
+  color: #fff !important;
+  padding: 10px 20px;
+  font-size: 14px;
+}
+.offcanvas .btn-close {
+  background-color: white !important; 
+  border-radius: 50%;
+}
+.offcanvas-title{
+  font-family: Montserrat;
+}
+.nav-off-margin{
+  margin-left: 0;
+}
 /* inicio del main */
 .content{
   width: 50%;
@@ -86,7 +115,7 @@ body, html {
 
 }
 .content h1{
-  font-size: 2.2em;
+  font-size: 2rem;
   font-weight: bolder;
   font-family: Montserrat;
   color: #fff;
@@ -95,7 +124,7 @@ body, html {
   margin-top: 1em;
   color: #fff;
   font-family: Inter;
-  font-size: .9em;
+  font-size: .8rem;
 }
 
 .banner-boton{
@@ -107,10 +136,13 @@ body, html {
   font-family: Inter;
   font-weight: 700;
   letter-spacing: 1px;
-  color: #fff;
   transition: 0.5s ease;
   cursor: pointer;
-
+  color: #fff;
+}
+.banner-boton a{
+  text-decoration: none;
+  
 }
 #btn1 button:hover{
   background-color: rgba(19, 38, 68, 1);
@@ -371,19 +403,6 @@ mark{
   background-color: #4AB3D5;
   margin-top: 1em;
 }
-.icons i{
-  color: rgba(238,224,208);
-  font-size: 30px;
-  cursor: pointer;
-}
-.copyright{
-  color: white;
-  margin-top: 20px;
-}
-.credite{
-  color: white;
-}
-
 
 /* boton flotante de whatsapp */
 #wa-button {
@@ -411,4 +430,72 @@ mark{
 #wa-button img {
   width: 100%; 
   height: auto; 
+}
+
+/*----------------------------------------------detalles------------------------------------------------------*/
+
+/*sombras en las cards*/
+.shadow{
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0.55);
+}
+@media (max-width: 767.98px) {
+  .offcanvas {
+      width: 250px;
+  }
+  .container-historias{
+    height: 115vh;
+  }
+}
+@media (max-width: 992px) {
+  .container-historias{
+    height: 90vh;
+  }
+}
+
+/*---------------------------------------------Navegacion--------------------------------------------------*/
+.login-form {
+  display: none;
+  position: absolute;
+  top: 40px;
+  right: 0;
+  background-color: white;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 200px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  z-index: 10000;
+}
+.login-form input {
+  width: 100%;
+  padding: 10px;
+  margin: 5px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+.login-form button {
+  width: 150px;
+  height: 30px;
+  background: #132644;
+  border: 1.5px solid #132644;
+  border-radius: 30px;
+  font-family: Inter;
+  font-size: .9em;
+  font-weight: 600;
+  letter-spacing: 1px ;
+  color: #fff;
+  transition: 0.5s ease;
+  cursor: pointer;
+}
+.pop-login-p{
+  font-size: .7rem;
+  font-family: Inter;
+}
+.pop-login-create{
+  font-size: .8rem;
+  color: #4AB3D5 !important;
+  text-decoration: none !important;
+}
+.space-cero{
+  margin-top: -1em;
 }
