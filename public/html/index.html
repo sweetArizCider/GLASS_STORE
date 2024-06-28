@@ -22,7 +22,7 @@
     <div class="container blue">
       <div class="navbar-top">
           <div class="social-link">
-              <a href="https://api.whatsapp.com/send?phone=8717843809" target="_blank"><img src="../img/index/whatsapp.svg" alt="" width="30px"></a>
+              <a href="https://api.whatsapp.com/send?phone=8717843809" target="_blank" ><img src="../img/index/whatsapp.svg" alt="" width="30px"></a>
               <a href="https://www.facebook.com/profile.php?id=100064181314031" target="_blank"><img src="../img/index/facebook.svg" alt="" width="30px"></a>
               <a href="https://www.instagram.com/glassstoretrc?igsh=MXVhdHh1MDVhOGxzeA==" target="_blank"><img src="../img/index/instagram.svg" alt="" width="30px"></a>
           </div>
@@ -30,16 +30,19 @@
               <img src="../img/index/GLASS.png" alt="" class="logo">
           </div>
           <div class="icons">
-              <a href="./products.html"><img src="../img/index/search.svg" alt="" width="20px"></a>
-              <img src="../img/index/favorites.svg" alt="" width="20px">
-              <img src="../img/index/user.svg" alt="" width="25px" id="user-icon">
+              <a href="./products.html"><img src="../img/index/search.svg" alt="" width="20px" ></a>
+              <img src="../img/index/favorites.svg" alt="" width="20px" style="cursor: pointer">
+              <img src="../img/index/user.svg" alt="" width="25px" id="user-icon" style="cursor: pointer">
               <div class="login-form" id="login-form">
                   <h6>Iniciar Sesión</h6>
-                  <input type="text" placeholder="Username" required>
-                  <input type="password" placeholder="Password" required>
-                  <p class="pop-login-p">¿No tienes cuenta?</p>
-                  <p class="space-cero"><a href="#"  class="pop-login-create">Crea una</a> </p>
-                  <button type="submit">Aceptar</button>
+                  <form action="/login">
+                    <input type="email" placeholder="Correo" required name="correo" id="correo">
+                    <input type="password" placeholder="Contraseña" required name="contraseña" id="contraseña">
+                    <p class="pop-login-p">¿No tienes cuenta?</p>
+                    <p class="space-cero"><a href="#"  class="pop-login-create">Crea una</a> </p>
+                    <button type="submit">Aceptar</button>
+                  </form>
+
               </div>
           </div>
       </div>
@@ -191,7 +194,7 @@
                     <div class="card-body">
                         <h3 class="card-titel text-center title-card-new">Persiana Sheer Elegance</h3>
                         <p class="card-text text-center card-price">$2500</p>
-                        <div id="btn3"><button class="boton-mini">Cotizar</button></div>
+                        <div id="btn3"><button class="boton-mini" data-bs-toggle="modal" data-bs-target="#quoteModal">Cotizar</button></div>
                     </div>
                 </div>
             </div>
@@ -204,7 +207,7 @@
                     <div class="card-body">
                         <h3 class="card-titel text-center title-card-new">Espejo para baño con luz</h3>
                         <p class="card-text text-center card-price">$600</p>
-                        <div id="btn3"><button class="boton-mini">Cotizar</button></div>
+                        <div id="btn3"><button class="boton-mini" data-bs-toggle="modal" data-bs-target="#quoteModal" >Cotizar</button></div>
                     </div>
                 </div>
             </div>
@@ -217,7 +220,7 @@
                     <div class="card-body">
                         <h3 class="card-titel text-center title-card-new">Pasamanos para Escalera</h3>
                         <p class="card-text text-center card-price">$1200</p>
-                        <div id="btn3"><button class="boton-mini">Cotizar</button></div>
+                        <div id="btn3"><button class="boton-mini" data-bs-toggle="modal" data-bs-target="#quoteModal" >Cotizar</button></div>
                     </div>
                 </div>
             </div>
@@ -230,7 +233,7 @@
                     <div class="card-body">
                         <h3 class="card-titel text-center title-card-new">Papel Tapiz</h3>
                         <p class="card-text text-center card-price">$650 m</p>
-                        <div id="btn3"><button class="boton-mini">Cotizar</button></div>
+                        <div id="btn3"><button class="boton-mini" data-bs-toggle="modal" data-bs-target="#quoteModal">Cotizar</button></div>
                     </div>
                 </div>
             </div>
@@ -359,8 +362,35 @@
       <p class="mb-0">&copy; 2024 Glass Store. All rights reserved.</p>
     </div>
     </footer>
-   
-</body>
+
+     <!-- modal cotizacion -->
+    <div class="modal fade" id="quoteModal" tabindex="-1" aria-labelledby="quoteModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="quoteModalLabel">Cotizar Producto</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="mb-3">
+                <label for="productName" class="form-label">Producto</label>
+                <input type="text" class="form-control" id="productName" readonly>
+              </div>
+              <div class="mb-3">
+                <label for="squareMeters" class="form-label">Metros Cuadrados</label>
+                <input type="number" class="form-control" id="squareMeters">
+              </div>
+              <div class="mb-3">
+                <label for="additionalFeatures" class="form-label">Características Adicionales</label>
+                <textarea class="form-control" id="additionalFeatures" rows="3"></textarea>
+              </div>
+              <button type="submit" class="btn btn-primary">Enviar Cotización</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
 
 <script src="../css/bootstrap-5.3.3-dist/js/bootstrap.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
@@ -395,5 +425,12 @@
                 behavior: 'smooth'
             });
         });
+         // Manejar el click en el botón de cotización
+    document.querySelectorAll('.boton-mini').forEach(button => {
+      button.addEventListener('click', function() {
+        const productName = this.closest('.card-body').querySelector('.card-titel').innerText;
+        document.getElementById('productName').value = productName;
+      });
+    });
 </script>
 </html>
