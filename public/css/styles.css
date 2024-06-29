@@ -248,6 +248,14 @@ html {
 }
 
 /*Seccion de productos mas vendidos*/
+.pad{
+  width: 90%;
+  height: 190px !important;
+  margin: auto; /* Ajusta este valor al alto deseado */
+  margin-top: .8em;
+  object-fit: cover;
+  overflow: hidden;
+}
 .icon-overlay-container {
   position: absolute;
   top: 9.5em;
@@ -506,3 +514,4 @@ mark{
   width: 200px;
   font-size: .9rem;
 }
+
