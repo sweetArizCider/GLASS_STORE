@@ -562,6 +562,7 @@ mark{
   width: 200px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   z-index: 10000;
+  text-align: center;
 }
 .login-form input {
   width: 100%;
@@ -587,11 +588,13 @@ mark{
 .pop-login-p{
   font-size: .7rem;
   font-family: Inter;
+  text-align: center;
 }
 .pop-login-create{
   font-size: .8rem;
   color: #4AB3D5 !important;
   text-decoration: none !important;
+  text-align: center;
 }
 .space-cero{
   margin-top: -1em;
@@ -711,4 +714,23 @@ mark{
   width: 100px;
   margin-top: 20px;
   margin-bottom: -25px;
+}
+/*modal del login*/
+.formulario-registro .login-form {
+  display: none;
+  position: absolute;
+  top: 20vh;
+  right: 20vh;
+}
+.close-btn {
+  width: 30px !important;
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  font-size: 20px;
+  cursor: pointer;
+  border: none !important;
+  background: none !important;
+  padding: 0; 
+  line-height: 1;
 }
