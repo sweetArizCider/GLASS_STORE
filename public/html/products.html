@@ -34,6 +34,7 @@
               <img src="../img/index/favorites.svg" alt="" width="20px" style="cursor: pointer">
               <img src="../img/index/user.svg" alt="" width="25px" id="user-icon" style="cursor: pointer">
               <div class="login-form" id="login-form">
+                <button class="close-btn" onclick="closeForm()"><img src="../img/register/close.svg" alt=""></button>
                   <h6>Iniciar Sesión</h6>
                   <form action="/login">
                     <input type="email" placeholder="Correo" required name="correo" id="correo">
@@ -238,6 +239,10 @@
       filterProducts();
     }
   });
+  // cerrar el modal
+  function closeForm() {
+            document.getElementById('login-form').style.display = 'none';
+        }
 
 
 </script>
