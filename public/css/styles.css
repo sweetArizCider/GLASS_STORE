@@ -45,8 +45,9 @@ html {
   cursor: pointer;
 }
 
+/*-----------------------------------------Banners------------------------------*/
 
-/* imagen de fondo" */
+/* Banner del index */
 .main-content{
   width: 100%;
   height: 90vh;
@@ -54,8 +55,17 @@ html {
   background-size: cover;
   background-position: 70%;
 }
+/* Banner de productos */
+.main-content-products{
+  width: 100%;
+  height: 60vh;
+  background: linear-gradient(180deg, rgba(19, 38, 68, 0.26) 0%, rgba(19, 38, 68, 0.26) 100%), url(../img/productos/tapizCremaBannerCut.jpeg)center/cover no-repeat;
+  background-size: cover;
+  background-position: 70%;
+}
 
-/* segunda barra */
+
+/*--------------------------------- segunda barra---------------------------- */
 #navbar-color{
   background-color: #132644;
 }
@@ -107,7 +117,7 @@ html {
 .nav-off-margin{
   margin-left: 0;
 }
-/* inicio del main */
+/* --------------------------------inicio del main---------------------- */
 .content{
   width: 50%;
   padding-top:  150px;
@@ -126,7 +136,20 @@ html {
   font-family: Inter;
   font-size: .8rem;
 }
-
+/* vista de productos*/
+.content-products{
+  width: 70%;
+  padding-top:  150px;
+  margin: auto;
+}
+.content-products h1{
+  font-size: 2rem;
+  font-weight: bolder;
+  font-family: 'Montserrat';
+  color: #fff;
+  text-align: center;
+}
+/* vista de productos*/
 .banner-boton{
   width: 200px;
   height: 42px;
@@ -248,6 +271,14 @@ html {
 }
 
 /*Seccion de productos mas vendidos*/
+.pad{
+  width: 90%;
+  height: 190px !important;
+  margin: auto; /* Ajusta este valor al alto deseado */
+  margin-top: .8em;
+  object-fit: cover;
+  overflow: hidden;
+}
 .icon-overlay-container {
   position: absolute;
   top: 9.5em;
@@ -445,12 +476,64 @@ mark{
   .container-historias{
     height: 115vh;
   }
+  .busqueda {
+    background-color: #fff;
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100% !important;
+    height: 6vh;
+    
+  }
+  .main-content{
+    width: 100%;
+    height: 60vh;
+    background: linear-gradient(180deg, rgba(19, 38, 68, 0.26) 0%, rgba(19, 38, 68, 0.26) 100%), url(../img/index/background.jpeg)center/cover no-repeat;
+    background-size: cover;
+    background-position: 70%;
+  }
+  .main-content h1{
+    margin-top: -50px !important;
+  }
+  /* Banner de productos */
+  .main-content-products{
+    width: 100%;
+    height: 60vh;
+    background: linear-gradient(180deg, rgba(19, 38, 68, 0.26) 0%, rgba(19, 38, 68, 0.26) 100%), url(../img/productos/tapizCremaBannerCut.jpeg)center/cover no-repeat;
+    background-size: cover;
+    background-position: 70%;
+  }
+  .content-products h1{
+    margin-top: -50px !important;
+  }
+
 }
 @media (max-width: 992px) {
   .container-historias{
     height: 90vh;
   }
+  .nav-left{
+    margin-left: 4em;
+  }
+  .main-content{
+    width: 100%;
+    height: 60vh;
+    background: linear-gradient(180deg, rgba(19, 38, 68, 0.26) 0%, rgba(19, 38, 68, 0.26) 100%), url(../img/index/background.jpeg)center/cover no-repeat;
+    background-size: cover;
+    background-position: 70%;
+  }
+  .main-content h1{
+    margin-top: -50px !important;
+  }
+  
+
 }
+
 
 /*---------------------------------------------Navegacion--------------------------------------------------*/
 .login-form {
@@ -505,4 +588,31 @@ mark{
   height: 6vh;
   width: 200px;
   font-size: .9rem;
+}
+
+
+/*-----------------------------------------------------------------------------
+------------------------------SECCION PRODUCTOS-------------------------------
+-------------------------------------------------------------------------------*/
+.busqueda {
+  background-color: #fff;
+  padding-left: 30px;
+  padding-right: 30px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  border-radius: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60%;
+  height: 6vh;
+}
+.buscar-input {
+  width: 100%;
+  border: none;
+  outline: none;
+  margin: auto;
+  font-family: 'Montserrat';
+  font-size: 13px;
+  color: #132644;
 }

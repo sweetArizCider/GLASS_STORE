@@ -5,10 +5,238 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Glass Store</title>
   <link rel="shortcut icon" href="../img/index/logoVarianteSmall.png" type="image/x-icon">
+  <link rel="stylesheet" href="../css/styles.css">
+  <link rel="stylesheet" href="../css/bootstrap-5.3.3-dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../css/normalized.css">
 </head>
 <body>
-  <h1>
-    Aqui se mostraran todos los productos
-  </h1>
+  <!-- whatsapp flotante -->
+  <div id="wa-button">
+    <a href="https://api.whatsapp.com/send?phone=8717843809" target="_blank">
+      <img src="../img/index/whatsappFloat.svg" alt="Contáctanos por WhatsApp">
+    </a>
+  </div>
+    <!-- barra superior -->
+    <div class="container blue">
+      <div class="navbar-top">
+          <div class="social-link">
+              <a href="https://api.whatsapp.com/send?phone=8717843809" target="_blank" ><img src="../img/index/whatsapp.svg" alt="" width="30px"></a>
+              <a href="https://www.facebook.com/profile.php?id=100064181314031" target="_blank"><img src="../img/index/facebook.svg" alt="" width="30px"></a>
+              <a href="https://www.instagram.com/glassstoretrc?igsh=MXVhdHh1MDVhOGxzeA==" target="_blank"><img src="../img/index/instagram.svg" alt="" width="30px"></a>
+          </div>
+          <div class="logo">
+              <img src="../img/index/GLASS.png" alt="" class="logo">
+          </div>
+          
+          <div class="icons">
+            
+              <a href="../html/index.html"><img src="../img/productos/home.svg" alt="" width="20px" ></a>
+              <img src="../img/index/favorites.svg" alt="" width="20px" style="cursor: pointer">
+              <img src="../img/index/user.svg" alt="" width="25px" id="user-icon" style="cursor: pointer">
+              <div class="login-form" id="login-form">
+                  <h6>Iniciar Sesión</h6>
+                  <form action="/login">
+                    <input type="email" placeholder="Correo" required name="correo" id="correo">
+                    <input type="password" placeholder="Contraseña" required name="contraseña" id="contraseña">
+                    <p class="pop-login-p">¿No tienes cuenta?</p>
+                    <p class="space-cero"><a href="../html/register.html"  class="pop-login-create">Crea una</a> </p>
+                    <button type="submit">Aceptar</button>
+                  </form>
+
+              </div>
+          </div>
+      </div>
+  </div>
+
+  <!-- segunda barra -->
+  <nav class="navbar sticky-top navbar-expand-md" id="navbar-color">
+    <div class="container-fluid">
+        <!-- menú hamburguesa -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar">
+            <span><i><img src="../img/index/menu.svg" alt="Menu" width="30px"></i></span>
+        </button>
+        <div class="offcanvas offcanvas-start" id="offcanvasNavbar">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title">Menú</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+            </div>
+            <div class="offcanvas-body">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link"  href="./index.html">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link nav-left" href="https://api.whatsapp.com/send?phone=8717843809" target="_blank">Contacto</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link nav-left" href="./citas.html">Agendar</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link nav-left" href="./index.html#about-us">Nosotros</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+</nav>
+
+    <!-- banner -->
+     <main>
+      <div class="main-content-products">
+        <div class="content-products">
+          <h1>" TRANSFORMA TU ESPACIO CON
+              ESTILO Y DISTINCIÓN "
+          </h1><br>
+          <div class="busqueda mx-auto">
+            <input type="text" placeholder="Buscar" class="buscar-input" id="search-input">
+            <img src="../img/productos/search.svg" alt="" id="search-button" style="cursor: pointer;">
+          </div>
+        </div> 
+        
+      </div>
+     </main>
+
+      <!-- Algunos produtos -->
+      <div class="container">
+        <div class="row" style="margin-top: 50px;" id="product-list">
+          <div class="col-md-3 py-3 py-md-0 product-item" data-name="Persiana Sheer Elegance">
+            <div class="card shadow" id="c">
+              <img src="../img/index/persianaGris.jpeg" alt="" class="card image-top pad">
+              <div class="card-body">
+                <h3 class="card-titel text-center title-card-new">Persiana Sheer Elegance</h3>
+                <p class="card-text text-center card-price">$2500</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3 py-3 py-md-0 product-item" data-name="Espejo para baño con luz">
+            <div class="card shadow" id="c">
+              <img src="../img/index/espejoParedBaldosaOscuraConLavabo.jpeg" alt="" class="card image-top pad">
+              <div class="card-body">
+                <h3 class="card-titel text-center title-card-new">Espejo para baño con luz</h3>
+                <p class="card-text text-center card-price">$600</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3 py-3 py-md-0 product-item" data-name="Pasamanos para escalera">
+            <div class="card shadow" id="c">
+              <img src="../img/index/pasamanosEscaleraCoralVidrio.png" alt="" class="card image-top pad">
+              <div class="card-body">
+                <h3 class="card-titel text-center title-card-new">Pasamanos para escalera</h3>
+                <p class="card-text text-center card-price">$1200</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3 py-3 py-md-0 product-item" data-name="Papel tapiz">
+            <div class="card shadow" id="c">
+              <img src="../img/index/tapizRosa.jpeg" alt="" class="card image-top pad">
+              <div class="card-body">
+                <h3 class="card-titel text-center title-card-new">Papel tapiz</h3>
+                <p class="card-text text-center card-price">$650</p>
+              </div>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+
+<!--Footer-->
+  <footer class="footer">
+    <div class="container">
+      <div class="row">
+          <div class="col-md-4 mb-3">
+              <h5>Misión</h5>
+              <p>Transformar espacios con soluciones innovadoras y elegantes para el diseño de interiores, creando hogares y negocios funcionales, acogedores y que reflejen el estilo único de cada cliente.</p>
+          </div>
+          <div class="col-md-4 mb-3">
+              <h5>Links</h5>
+              <ul class="list-unstyled">
+                  <li><a href="https://api.whatsapp.com/send?phone=8717843809" target="_blank" class="text-white">Contacto</a></li>
+                  <li><a href="./products.html" class="text-white">Productos</a></li>
+                  <li><a href="./citas.html" class="text-white">Agendar</a></li>
+                  <li><a href="#about-us" id="link-nosotros" class="text-white">Nosotros</a></li>
+              </ul>
+          </div>
+          <div class="col-md-4 mb-3">
+              <h5>Contáctanos</h5>
+              <p><i class="bi bi-geo-alt"></i>Torreón Coahuila, México</p>
+              <p><i class="bi bi-envelope"></i> glassstore@gmail.com</p>
+              <p><i class="bi bi-phone"></i> +52 123 4564 456</p>
+          </div>
+      </div>
+  </div>
+  <div class="copy text-center py-3 w-100">
+    <p class="mb-0">&copy; 2024 Glass Store. All rights reserved.</p>
+  </div>
+  </footer>
 </body>
+<script src="../css/bootstrap-5.3.3-dist/js/bootstrap.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="../css/bootstrap-5.3.3-dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.6/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.min.js"></script>
+    
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.min.js"></script>
+<script>
+  function changeIcon(container) {
+      const icon = container.querySelector('img.icon-overlay');
+      if (icon.src.includes('addFavorites.svg')) {
+          icon.src = '../img/index/heartCover.svg'; 
+      } else {
+          icon.src = '../img/index/addFavorites.svg'; 
+      }
+      sound.play();
+  }
+  document.getElementById('user-icon').addEventListener('click', function() {
+            var loginForm = document.getElementById('login-form');
+            if (loginForm.style.display === 'none' || loginForm.style.display === '') {
+                loginForm.style.display = 'block';
+            } else {
+                loginForm.style.display = 'none';
+            }
+        });
+        document.getElementById('link-nosotros').addEventListener('click', function(event) {
+            event.preventDefault();
+            document.querySelector('#about-us').scrollIntoView({
+                behavior: 'smooth'
+            });
+        });
+         // Manejar el click en el botón de cotización
+    document.querySelectorAll('.boton-mini').forEach(button => {
+      button.addEventListener('click', function() {
+        const productName = this.closest('.card-body').querySelector('.card-titel').innerText;
+        document.getElementById('productName').value = productName;
+      });
+    });
+
+
+  // Función para filtrar productos
+  function filterProducts() {
+    const query = document.getElementById('search-input').value.toLowerCase().trim();
+    const products = document.querySelectorAll('.product-item');
+
+    products.forEach(product => {
+      const productName = product.getAttribute('data-name').toLowerCase();
+      if (productName.includes(query)) {
+        product.style.display = 'block';
+      } else {
+        product.style.display = 'none';
+      }
+    });
+  }
+
+  // Manejar el clic en el botón de búsqueda
+  document.getElementById('search-button').addEventListener('click', filterProducts);
+
+  // Manejar la búsqueda al presionar la tecla Enter
+  document.getElementById('search-input').addEventListener('keypress', function(event) {
+    if (event.key === 'Enter') {
+      filterProducts();
+    }
+  });
+</script>
 </html>
