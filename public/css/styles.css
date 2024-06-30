@@ -511,6 +511,18 @@ mark{
   .content-products h1{
     margin-top: -50px !important;
   }
+  .back-left{
+    height: 10vh !important;
+    overflow: hidden !important;
+    position: relative;
+  }
+  .formulario-registro h1{
+    font-size: 2.5rem !important;
+    font-weight: 800 !important;
+  }
+  .button-continue span{
+    font-size: .7em !important;  
+  }
 
 }
 @media (max-width: 992px) {
@@ -530,7 +542,9 @@ mark{
   .main-content h1{
     margin-top: -50px !important;
   }
-  
+  .back-left{
+    height: 10% !important;
+  }
 
 }
 
@@ -615,4 +629,86 @@ mark{
   font-family: 'Montserrat';
   font-size: 13px;
   color: #132644;
+}
+
+
+/*-------------------------------registro-----------------------------------------*/
+
+/*titulos*/
+.formulario-registro{
+  width: 90% !important;
+  margin: auto !important;
+}
+.formulario-registro h1{
+  font-family: 'Montserrat';
+  color: #132644;
+  margin-top: 30px;
+  font-size: 2.9rem;
+  font-weight: 800 !important;
+}
+.formulario-registro p{
+  font-family: 'Inter';
+  color: #132644;
+  font-size: .9rem !important ; 
+}
+/*continuar con */
+.button-continue{
+  width: 70% !important;
+  height: 6vh;
+  margin: auto;
+  border:1px solid rgba(19, 38, 68, 0.53);
+  border-radius: 30px;
+  align-items: center;
+  text-decoration: none;
+  padding: 5px;
+  margin-bottom: .5em;
+  color: #132644;
+}
+.button-continue img{
+  padding-left: 20px;
+}
+.button-continue span{
+  font-family: 'Inter' !important;
+  
+}
+/*formulario*/
+.form-register .form-floating{
+  width: 75%;
+  margin: auto;
+  border: 1px solid rgba(19, 38, 68, 0.53);
+  margin-bottom: 0px !important;
+  font-size: .8rem !important;
+  font-family: 'Inter';
+  padding-top: 0px !important;
+  border-radius: 8px;
+  overflow: hidden; 
+}
+.form-register{
+  margin-top: 2em;
+}
+.submit-button-register{
+  background-color: #132644;
+  color: #fff;
+  font-family: 'Montserrat';
+  font-weight: 700;
+  height: 7vh;
+  width: 75%;
+  margin: auto;
+  border: none;
+  border-radius: 30px;
+  letter-spacing: 2px;
+  margin-bottom: 3em;
+}
+.submit-button-register:hover{
+  background-color: #4AB3D5;
+}
+.background-left-image {
+  background: linear-gradient(180deg, rgba(19, 38, 68, 0.26) 0%, rgba(19, 38, 68, 0.26) 100%), url(../img/index/persianaFondoNaranja.jpeg) center/cover no-repeat;
+  background-size: cover;
+  background-position: 70%;
+}
+.logotipo-glass{
+  width: 100px;
+  margin-top: 20px;
+  margin-bottom: -25px;
 }
