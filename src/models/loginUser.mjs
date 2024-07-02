@@ -1,4 +1,4 @@
-// uso de la pool de la bd
+/*// uso de la pool de la bd
 
 import { pool } from "../config/mysqlConfig.mjs";
 
@@ -17,9 +17,32 @@ export const logearUsuario = async (correo, contraseña) => {
       return rows[0];
 
     } else {return null}; // devuelve nulo si es < a 0
+
   }catch(error){
     console.error('Error en el inicio de sesion', error); // en caso de error lanzar error en consola
   }finally {
     connection.release(); // termina la coneccion de bd
+  }
+}
+  */
+
+import { pool } from "../config/mysqlConfig.mjs";
+
+export const logearUsuario = async (correo, contraseña) => {
+  const connection = await pool.getConnection();
+
+  try {
+    const [rows] = await connection.query(`CALL AuthenticateUser(?, ?)`, [correo, contraseña]);
+
+    if (rows[0].length > 0 && rows[0][0].mensaje === 'Autenticación exitosa') {
+      return rows[0][0];
+    } else {
+      return null;
+    }
+  } catch (error) {
+    console.error('Error en el inicio de sesión', error);
+    return null;
+  } finally {
+    connection.release();
   }
 }

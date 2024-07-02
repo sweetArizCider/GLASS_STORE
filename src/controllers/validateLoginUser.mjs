@@ -1,4 +1,4 @@
-import { logearUsuario } from "../models/loginUser.mjs";
+/*import { logearUsuario } from "../models/loginUser.mjs";
 
 // funcion para logear un usuario
 export const login = async (req, res) => {
@@ -17,5 +17,25 @@ export const login = async (req, res) => {
   } catch(error) {
     console.error('Error en login: ', error);
     res.status(500).send('Error en el server')
+  }
+}*/
+
+import { logearUsuario } from "../models/loginUser.mjs";
+
+export const login = async (req, res) => {
+  const { correo, contraseña } = req.body;
+
+  try {
+    const usuario = await logearUsuario(correo, contraseña);
+
+    if (usuario) {
+      res.status(201).send(`Usuario logeado, ID: ${usuario.id_usuario}`); // Mensaje de éxito con ID del usuario
+    } else {
+      console.error('Credenciales incorrectas');
+      res.status(401).send('Credenciales incorrectas');
+    }
+  } catch (error) {
+    console.error('Error en login: ', error);
+    res.status(500).send('Error en el servidor');
   }
 }
