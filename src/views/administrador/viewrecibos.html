@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recibos</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/styles.css">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1>Recibos</h1>
+        <div class="dropdown mb-3">
+            <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Filtrar Recibos
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" href="#" onclick="showFilter('nombre')">Buscar por Nombre</a>
+                <a class="dropdown-item" href="#" onclick="showFilter('fecha')">Buscar por Fecha</a>
+            </div>
+        </div>
+        <div id="filters">
+            <!-- Filtros dinámicos se insertarán aquí -->
+        </div>
+        <div id="recibos-table">
+            <!-- Tabla de recibos se insertará aquí -->
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Fecha Cotización</th>
+                        <th>Monto Cotización</th>
+                        <th>Fecha Venta</th>
+                        <th>Subtotal</th>
+                        <th>Total Promoción</th>
+                        <th>Extras</th>
+                        <th>Total</th>
+                        <th>Fecha Pago</th>
+                        <th>Cantidad Pagada</th>
+                        <th>Saldo</th>
+                    </tr>
+                </thead>
+                <tbody id="recibos-body">
+                    <!-- Datos de los recibos se insertarán aquí -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script src="/js/app.js"></script>
+</body>
+</html>
