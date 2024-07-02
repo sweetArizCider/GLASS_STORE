@@ -24,10 +24,8 @@ app.use(express.static(path.join(__dirname, '../../GLASS_STORE')));
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '../public/html/index.html'));
 });
-
 // Ruta para el registro de usuarios
 app.use('/register', registerRoute);
-
 app.use('/login', loginRoute);
 
 app.listen(httpConfig.port, httpConfig.hostname, () => {
