@@ -12,7 +12,7 @@ export const login = async (req, res) => {
     const usuario = await logearUsuario(correo, contraseña);
     // si usuario es true te manda a la pagina principal
     if (usuario) {
-      res.redirect('?/login=success');
+      res.redirect('/?login=success');
 
     } else {
       console.error('Credenciales incorrectas');
