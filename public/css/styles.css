@@ -831,6 +831,10 @@ mark{
   border: none;
   padding: 0;
 }
+.form-select-custom:focus {
+  outline: none;
+  box-shadow: 0 0 2px 2px #132644 !important;
+}
 .form-select-custom option {
   display: block;
   border: 1px solid rgba(19, 38, 68, 0.53);
@@ -844,11 +848,10 @@ mark{
   background-color: #4ab2d5b1 !important;
 }
 
-
 .custom-scrollbar {
   scrollbar-width: thin;
   scrollbar-color: #132644 transparent;
-  max-height: 150px; /* Adjust height if needed */
+  max-height: 150px; 
   overflow-y: auto;
 }
 .text-motivo {
