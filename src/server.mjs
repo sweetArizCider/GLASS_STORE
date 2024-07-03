@@ -5,8 +5,15 @@ import loginRoute from './routes/login.mjs';
 import bodyParser from 'body-parser';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import session from 'express-session';
 
 const app = express();
+
+app.use(session({
+    secret: '123',
+    resave: false,
+    saveUninitialized: true
+}))
 
 // Middleware para parsear application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));

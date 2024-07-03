@@ -7,12 +7,12 @@ const __dirname = path.dirname(__filename);
 
 export const login = async (req, res) => {
   const { correo, contraseña } = req.body;
-
   try {
     const usuario = await logearUsuario(correo, contraseña);
-    // si usuario es true te manda a la pagina principal
     if (usuario) {
+      req.session.user = usuario;
       res.redirect('/?login=success');
+      console.log(usuario.nombres +" " + usuario.apellido_p);
 
     } else {
       console.error('Credenciales incorrectas');
@@ -22,4 +22,4 @@ export const login = async (req, res) => {
     console.error('Error en login: ', error);
     res.status(500).send('Error en el servidor');
   }
-}
+};

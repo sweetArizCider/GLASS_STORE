@@ -10,8 +10,11 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "dotenv": "^16.4.5",
     "express": "^4.19.2",
+    "express-session": "^1.18.0",
     "mysql": "^2.18.1",
-    "mysql2": "^3.10.1"
+    "mysql2": "^3.10.1",
+    "session": "^0.1.0"
   }
 }
