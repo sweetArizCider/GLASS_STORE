@@ -22,7 +22,7 @@ app.use(express.static(path.join(__dirname, '../../GLASS_STORE')));
 
 // Ruta para el formulario de registro
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, '../public/html/index.html'));
+    res.sendFile(path.join(__dirname, '../src/views/administrador/viewrecibos.html'));
 });
 
 // Ruta para el registro de usuarios
