@@ -816,11 +816,6 @@ mark{
 }
 /* FIN DEL CALENDARIO*/
 
-
-
-
-
-
 /*lado derecho*/
 .title-agendar{
   font-family: 'Montserrat';
@@ -886,4 +881,36 @@ mark{
  font-weight: 600;
  font-size: 1em ;
 }
-
+/*---------------------------PERFIL DEL PRODUCTO----------------------------------------*/
+.sub-imgs {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+.container-sub-img img {
+  cursor: pointer;
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+}
+.color-option-container {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.color-option {
+  width: 20px;
+  height: 20px;
+  border: 1px solid #000;
+}
+.color-option.selected {
+  transform: scale(1.5); /* Aumenta la escala al 150% */
+  border: 2px solid #000;
+}
+.button-product {
+  margin-right: 10px;
+}
+.main-img img {
+  width: 100%;
+  height: auto;
+}

@@ -83,12 +83,55 @@
     <div class="container mt-5" id="product-profile">
       <div class="row">
           <div class="col-md-6">
-              <img id="product-imag" src="../img/index/barandalBalconCafe.jpeg" alt="Imagen del Producto" class="img-fluid">
+              <!-- Imagenes del producto -->
+              <div id="carouselProductImages" class="carousel slide" data-bs-ride="carousel">
+                  <div class="carousel-inner main-img">
+                      <div class="carousel-item active">
+                          <img id="product-img" src="../img/index/barandalBalconCafe.jpeg" alt="Imagen del Producto" class="img-fluid">
+                      </div>
+                      <div class="carousel-item">
+                          <img src="../img/index/cancelCafeClaro.jpeg" class="img-fluid" alt="">
+                      </div>
+                      <div class="carousel-item">
+                          <img src="../img/index/cancelFondoCrema.jpeg" class="img-fluid" alt="">
+                      </div>
+                  </div>
+              </div>
+              <div class="sub-imgs">
+                  <div class="container-sub-img"><img src="../img/index/cancelCafeClaro.jpeg" class="sub-img" alt=""></div>
+                  <div class="container-sub-img"><img src="../img/index/barandalBalconCafe.jpeg" class="sub-img" alt=""></div>
+                  <div class="container-sub-img"><img src="../img/index/cancelFondoCrema.jpeg" class="sub-img" alt=""></div>
+              </div>
           </div>
           <div class="col-md-6">
-              <h1 id="product-name">Nombre del Producto</h1>
-              <p id="product-description">Descripción del Producto</p>
-              <p id="product-price">Precio del Producto</p>
+              <!-- Detalles del producto -->
+              <h1 id="product-name">Nombre del producto</h1>
+              <br>
+              <p id="product-description">$2500.00 MX</p>
+              <p id="product-price">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt quod autem sit aut nostrum quasi esse incidunt quo et eveniet quaerat, debitis quas exercitationem commodi? Perspiciatis eligendi veniam libero commodi?</p>
+              <p>Colores disponibles</p>
+              <br>
+              <div class="color-option-container">
+                  <div class="color-option" style="background-color: #E9E9E9; cursor: pointer; "></div>
+                  <div class="color-option" style="background-color: #E5E7D2; cursor: pointer;"></div>
+                  <div class="color-option" style="background-color: #C1C2C4; cursor: pointer;"></div>
+                  <div class="color-option" style="background-color: #D4CCB9; cursor: pointer;"></div>
+                  <div class="color-option" style="background-color: #C2B7A1; cursor: pointer;"></div>
+                  <div class="color-option" style="background-color: #483429; cursor: pointer;"></div>
+                  <div class="color-option" style="background-color: #654050;cursor: pointer;"></div>
+                  <div class="color-option" style="background-color: #447296; cursor: pointer;"></div>
+                  <div class="color-option" style="background-color: #2B2120; cursor: pointer;"></div>
+                  <div class="color-option" style="background-color: #959595; cursor: pointer;"></div>
+                  <div class="color-option" style="background-color: #3D3D3D; cursor: pointer;"></div>
+                  <div class="color-option" style="background-color: #121212;cursor: pointer;"></div>
+                  <!-- Agrega más colores según sea necesario -->
+              </div>
+              <br>
+              <p>Cantidad</p>
+              <input type="number" name="cantidad" id="cantidad" class="form-control w-25">
+              <br><br>
+              <button class="btn btn-primary button-product add-favorites">Añadir a favoritos</button>
+              <button class="btn btn-secondary button-product cotizar">Cotizar</button>
           </div>
       </div>
   </div>
@@ -96,4 +139,25 @@
 
 
 </body>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('.sub-img').on('click', function() {
+                var newSrc = $(this).attr('src');
+                var $carousel = $('#carouselProductImages');
+                var $mainImg = $carousel.find('.carousel-item.active img');
+                var $newImg = $('<div class="carousel-item"><img src="' + newSrc + '" class="img-fluid"></div>');
+                
+                $carousel.find('.carousel-inner').append($newImg);
+                $mainImg.closest('.carousel-item').remove();
+                $newImg.addClass('active');
+            });
+
+            $('.color-option').on('click', function() {
+                $('.color-option').removeClass('selected');
+                $(this).addClass('selected');
+            });
+        });
+    </script>
 </html>
