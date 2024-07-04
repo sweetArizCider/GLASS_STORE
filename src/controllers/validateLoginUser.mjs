@@ -10,10 +10,7 @@ export const login = async (req, res) => {
   try {
     const usuario = await logearUsuario(correo, contraseña);
     if (usuario) {
-      req.session.user = usuario;
       res.redirect('/?login=success');
-      console.log(usuario.nombres +" " + usuario.apellido_p);
-
     } else {
       console.error('Credenciales incorrectas');
       res.status(401).send('Credenciales incorrectas');

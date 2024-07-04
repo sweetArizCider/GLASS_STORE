@@ -1,2 +1,2 @@
 # GLASS_STORE
-our first project
+our first project :)
