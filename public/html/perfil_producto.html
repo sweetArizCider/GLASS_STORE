@@ -80,7 +80,7 @@
     </nav>
 
     <!--Perfil del producto-->
-    <div class="container mt-5" id="product-profile">
+    <div class="container mt-5" id="product-profile produc-container">
       <div class="row">
           <div class="col-md-6">
               <!-- Imagenes del producto -->
@@ -105,12 +105,11 @@
           </div>
           <div class="col-md-6">
               <!-- Detalles del producto -->
-              <h1 id="product-name">Nombre del producto</h1>
+              <h1 id="product-name" class="name-product">Nombre del producto</h1>
               <br>
-              <p id="product-description">$2500.00 MX</p>
-              <p id="product-price">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt quod autem sit aut nostrum quasi esse incidunt quo et eveniet quaerat, debitis quas exercitationem commodi? Perspiciatis eligendi veniam libero commodi?</p>
-              <p>Colores disponibles</p>
-              <br>
+              <p id="product-price" class="product-price">$2500.00 MX</p>
+              <p id="product-description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt quod autem sit aut nostrum quasi esse incidunt quo et eveniet quaerat, debitis quas exercitationem commodi? Perspiciatis eligendi veniam libero commodi?</p>
+              <p class="product-sub-title">Colores disponibles</p>
               <div class="color-option-container">
                   <div class="color-option" style="background-color: #E9E9E9; cursor: pointer; "></div>
                   <div class="color-option" style="background-color: #E5E7D2; cursor: pointer;"></div>
@@ -127,11 +126,11 @@
                   <!-- Agrega más colores según sea necesario -->
               </div>
               <br>
-              <p>Cantidad</p>
-              <input type="number" name="cantidad" id="cantidad" class="form-control w-25">
-              <br><br>
-              <button class="btn btn-primary button-product add-favorites">Añadir a favoritos</button>
-              <button class="btn btn-secondary button-product cotizar">Cotizar</button>
+              <p class="product-sub-title">Cantidad</p>
+              <input type="number" name="cantidad" id="cantidad" class="product-cantidad form-control w-25">
+              <br>
+              <button class=" button-product add-favorites">Añadir a favoritos</button>
+              <button class=" button-product cotizar">Cotizar</button>
           </div>
       </div>
   </div>

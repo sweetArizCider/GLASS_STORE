@@ -882,6 +882,30 @@ mark{
  font-size: 1em ;
 }
 /*---------------------------PERFIL DEL PRODUCTO----------------------------------------*/
+
+.main-img{
+  max-width: 600px;
+  max-height: 400px;
+}
+.name-product{
+  color: #132644;
+  font-family: 'Montserrat';
+  font-weight: 700;
+  font-size: 2.2em;
+}
+.product-price{
+  font-family: 'Montserrat';
+  color: #4AB3D5;
+  font-size: 1.2em;
+  font-weight:600;
+}
+.product-sub-title{
+  font-family: 'Inter';
+  font-weight: 600;
+}
+.product-cantidad {
+  border: 1px solid rgba(19, 38, 68, 0.53) !important;
+}
 .sub-imgs {
   display: flex;
   gap: 10px;
@@ -899,16 +923,26 @@ mark{
   flex-wrap: wrap;
 }
 .color-option {
-  width: 20px;
-  height: 20px;
-  border: 1px solid #000;
+  width: 25px;
+  height: 25px;
+  border: 1px solid rgba(19, 38, 68, 0.53);
+  border-radius: 3px;
 }
 .color-option.selected {
   transform: scale(1.5); /* Aumenta la escala al 150% */
-  border: 2px solid #000;
+  border: none;
 }
 .button-product {
   margin-right: 10px;
+  background-color: #132644;
+  border: none;
+  padding: 10px 20px;
+  font-family: 'Inter';
+  font-size: .9em;
+  letter-spacing: 1px;
+  font-weight: 500;
+  color: #fff;
+  border-radius: 30px;
 }
 .main-img img {
   width: 100%;
