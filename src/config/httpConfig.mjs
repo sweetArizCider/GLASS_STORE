@@ -1,6 +1,6 @@
 import http from 'http';
 
 export const httpConfig = {
-    port: 3000,
+    port: 5002,
     hostname: 'localhost'
 }

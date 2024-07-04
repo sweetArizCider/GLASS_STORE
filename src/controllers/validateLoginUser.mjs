@@ -1,21 +1,22 @@
 import { logearUsuario } from "../models/loginUser.mjs";
+import path from 'path';
+import { fileURLToPath } from 'url';
 
-// funcion para logear un usuario
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 export const login = async (req, res) => {
-  // declaro una lista con contraseña y correo que vendran del submit 
   const { correo, contraseña } = req.body;
-
-  try{
-    // declaro usuario, y es igual al resultado de la funcion logearUsuario, recordando que es un booleano
+  try {
     const usuario = await logearUsuario(correo, contraseña);
-    if(usuario){
-      res.status(201).send('Usuario logeado'); // si es true logeado con exito
-    } else{
-    console.error('Credenciales error'); // si es false no se logea
-    res.status(500).send('Error')
+    if (usuario) {
+      res.redirect('/?login=success');
+    } else {
+      console.error('Credenciales incorrectas');
+      res.status(401).send('Credenciales incorrectas');
     }
-  } catch(error) {
+  } catch (error) {
     console.error('Error en login: ', error);
-    res.status(500).send('Error en el server')
+    res.status(500).send('Error en el servidor');
   }
-}
+};
