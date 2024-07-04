@@ -734,3 +734,156 @@ mark{
   padding: 0; 
   line-height: 1;
 }
+/*--------------------------------------AGENDAR CITAS-------------------------------------------------*/
+/*lado izquierdo- calendario*/
+.blue-left-citas{
+  background-color: #132644;
+  opacity: 1;
+  background-image:  radial-gradient(#4AB3D5 0.65px, transparent 0.65px), radial-gradient(#4AB3D5 0.65px, #132644 0.65px);
+  background-size: 26px 26px;
+  background-position: 0 0,13px 13px;
+  margin-top: 4em;
+  padding-top: .7em;
+  padding-bottom: 4em;
+  color: #fff;
+  align-items: center;
+  text-align: center;
+}
+.logo-citas{
+  width: 100px;
+  margin-top: 5em;
+}
+.subtitle-agendar{
+  font-family: 'Montserrat';
+  font-size: 1em;
+  margin-top: 3em;
+}
+/*  CALENDARIO PARA AGENDAR LAS CITAS  */
+.calendar {
+  margin-top: 3em !important;
+  margin-bottom: 5em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #4ab2d515;
+  width: 70%;
+  margin: auto;
+  padding:1.5em;
+  padding-right: 2em;
+  border-radius: 8px;
+}
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 300px;
+  margin-bottom: 10px;
+  align-items: center;
+  font-family: 'Inter';
+  font-weight: 700;
+}
+.calendar-header p {
+  margin: 0;
+}
+.calendar-days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 5px;
+  max-width: 300px;
+}
+.calendar-day {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  cursor: pointer;
+  border-radius: 8px; /* Redondeo */
+  background-color: rgba(198, 202, 237, 0.19); /* Color de fondo */
+}
+.calendar-day:hover {
+  background-color: rgba(198, 202, 237, 0.5); /* Color de fondo al pasar el ratón */
+}
+.calendar-day.selected {
+  background-color: #4AB3D5;
+  color: white;
+}
+.calendar-header button {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+/* FIN DEL CALENDARIO*/
+
+
+
+
+
+
+/*lado derecho*/
+.title-agendar{
+  font-family: 'Montserrat';
+  font-size: 1.7em !important;
+  margin-bottom: .5em;
+}
+.form-select-custom {
+  border: none;
+  padding: 0;
+}
+.form-select-custom:focus {
+  outline: none;
+  box-shadow: 0 0 2px 2px #132644 !important;
+}
+.form-select-custom option {
+  display: block;
+  border: 1px solid rgba(19, 38, 68, 0.53);
+  padding: 10px;
+  margin: 5px 0;
+  cursor: pointer;
+  border-radius: 8px;
+  text-align: center;
+}
+.form-select-custom option:hover{
+  background-color: #4ab2d5b1 !important;
+}
+
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: #132644 transparent;
+  max-height: 150px; 
+  overflow-y: auto;
+}
+.text-motivo {
+  resize: none;
+}
+.agendar{
+  text-align: center !important;
+  margin-top: 3.5em;
+
+}
+.agendar textarea{
+  width: 75%;
+  border: 1px solid rgba(19, 38, 68, 0.53);
+  border-radius: 8px;
+  padding: 1em;
+  font-family: 'Inter';
+  
+}
+.agendar select{
+  width: 75%;
+  margin: auto;
+}
+.submit-button-register{
+  margin-top: 2.5em;
+}
+
+.container-select{
+  margin-top: 2em !important;
+}
+.agendar label{
+ font-family: 'Inter';
+ font-weight: 600;
+ font-size: 1em ;
+}
+
