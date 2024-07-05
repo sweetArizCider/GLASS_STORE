@@ -1,8 +1,5 @@
 use glass_store_v2;
 
--- claves unicas: correo, telefono
--- select favoritos.usuario 
-
 -- ---------------------------------------------------GENERALES DE LOS USUARIOS
 -- login
 DELIMITER //
@@ -47,7 +44,21 @@ SELECT @session_user_id;
 -- se conserva para que pueda checar el administrador sus ventas asociadas, asi como lo que se le vendio, el historial de abonos, las promos
 
 -- consultar favoritos por usuario
--- es un select sencillo pero hay que usar el @session_user_id
+DELIMITER //
+CREATE PROCEDURE ConsultarFavoritos()
+BEGIN
+    IF @session_user_id IS NULL THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'No se ha iniciado sesión';
+    ELSE
+        SELECT PRODUCTOS.nombre, PRODUCTOS.descripcion, PRODUCTOS.precio
+        FROM FAVORITOS INNER JOIN PRODUCTOS ON FAVORITOS.producto = PRODUCTOS.id_producto
+        WHERE FAVORITOS.usuario = @session_user_id;
+    END IF;
+END //
+DELIMITER ;
+
+call ConsultarFavoritos;
 
 -- guardar en favoritos una vez le des al corazón
 DELIMITER //
@@ -108,6 +119,8 @@ FROM productos
 RIGHT JOIN tapices
 ON productos.id_producto = tapices.producto;
 
+select * from vista_tapices where tapices.producto = 1;
+
 -- filtrar productos por precio
 DELIMITER //
 CREATE PROCEDURE filtro_por_precio(
@@ -151,98 +164,338 @@ END //
 DELIMITER ;
 call CotizacionesSinVentaPorUsuario;
 
-/*echar un producto a un carro que no sabemos si existe o no*/
+/*asignar un carrito
+debe de ejecutarse al momento de iniciar sesion para que siempre haya carrito*/
+
 DELIMITER //
 CREATE PROCEDURE HandleCotizacion(
-    IN p_table_name VARCHAR(10),
-    IN p_new_id INT
 )
 BEGIN
     DECLARE v_cotizacion_id INT;
+    DECLARE v_no_venta INT;
 
-    -- Llamar a la función CotizacionesSinVentaPorUsuario y guardar el resultado en v_cotizacion_id
-    SET v_cotizacion_id = (SELECT CotizacionesSinVentaPorUsuario());
-
-    -- Si no hay una cotización sin venta por usuario, crear una nueva
-    IF v_cotizacion_id IS NULL THEN
-        INSERT INTO COTIZACIONES (usuario, monto) VALUES (@session_user_id, 0);
+    -- Si se encontró una cotización no enlazada a venta
+    IF v_cotizacion_id IS NOT NULL THEN
+        -- Actualizar la fecha de la cotización encontrada
+        UPDATE COTIZACIONES
+        SET fecha = CURRENT_TIMESTAMP
+        WHERE id_cotizacion = v_cotizacion_id;
         
-	SET v_cotizacion_id = LAST_INSERT_ID();
-    END IF;
+        -- Guardar el id de la cotización en una variable global
+        SET @current_cotizacion_id = v_cotizacion_id;
 
-    -- SQL dinámico para enlazar el nuevo registro con la cotización existente o con la nueva
-    SET @enlazar_cotizaciones = CONCAT('UPDATE ', p_table_name, ' SET cotizacion = ', v_cotizacion_id, ' WHERE id_cotizacion = ', p_new_id);
-    PREPARE stmt FROM @enlazar_cotizaciones;
-    EXECUTE stmt;
-    DEALLOCATE PREPARE stmt;
+    ELSE
+        -- Crear una nueva cotización
+        INSERT INTO COTIZACIONES (usuario, fecha, monto)
+        VALUES (@session_user_id, CURRENT_TIMESTAMP, 0);
+
+        -- Obtener el ID de la nueva cotización creada
+        SET @current_cotizacion_id = LAST_INSERT_ID();
+    END IF;
 END //
+DELIMITER ;
+
+CALL HandleCotizacion();
+select * from cotizaciones;
+
+/*echar un producto a un carro*/
+
+
+DELIMITER //
+
+CREATE PROCEDURE asignarACotizActual(
+    IN var_tabla VARCHAR(50),
+    IN var_id INT
+)
+BEGIN
+    IF var_tabla = 'tapices' THEN
+        UPDATE cotizaciones_tapices
+        SET cotizacion = @current_cotizacion_id
+        WHERE activo = TRUE AND id_cotizacion = var_id;
+	elseif var_tabla = 'persianas' THEN
+        UPDATE cotizaciones_persianas
+        SET cotizacion = @current_cotizacion_id
+        WHERE activo = TRUE AND id_cotizacion = var_id;
+ 	elseif var_tabla = 'vidrios' THEN
+        UPDATE cotizaciones_vidrios
+        SET cotizacion = @current_cotizacion_id
+        WHERE activo = TRUE AND id_cotizacion = var_id;
+	elseif var_tabla = 'herrerias' THEN
+        UPDATE cotizaciones_herrerias
+        SET cotizacion = @current_cotizacion_id
+        WHERE activo = TRUE AND id_cotizacion = var_id;
+
+    END IF;
+END //
+
 DELIMITER ;
 
 DELIMITER //
-CREATE TRIGGER AfterInsertCotizacionesHerreria
-AFTER INSERT ON COTIZACIONES_HERRERIAS
+
+CREATE TRIGGER actualizarCotiz
+BEFORE UPDATE ON cotizaciones_tapices
 FOR EACH ROW
 BEGIN
-    CALL HandleCotizacion('COTIZACIONES_HERRERIAS', NEW.id_cotizacion);
+    CALL asignarACotizActual('tapices', 1);
+END //
+
+DELIMITER ;
+
+update cotizaciones_tapices
+set cantidad = true
+where id_cotizacion = 1; 
+
+DELIMITER //
+
+CREATE TRIGGER asignacionCotiz
+BEFORE INSERT ON cotizaciones_tapices
+FOR EACH ROW
+BEGIN
+    CALL asignarACotizActual('tapices');
+END //
+
+DELIMITER ;
+
+/*sacar del carrito*/
+
+CREATE PROCEDURE cambiarEstadoInactivo(
+    IN var_id_cotizacion INT
+)
+BEGIN
+    UPDATE COTIZACIONES_HERRERIAS
+    SET activo = FALSE
+    WHERE id_cotizacion = var_id_cotizacion;
+END;
+
+
+/* mostrar todas las cotizaciones activas */
+
+DELIMITER //
+CREATE PROCEDURE mostrarCotizacionesActivas()
+BEGIN
+    -- Crear tabla temporal
+    CREATE TEMPORARY TABLE IF NOT EXISTS TempCotizaciones (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        tipo VARCHAR(50),
+        id_cotizacion INT,
+        cotizacion int,
+        alto DECIMAL(10,2),
+        largo DECIMAL(10,2),
+        cantidad INT
+    );
+
+    -- Insertar datos de COTIZACIONES_HERRERIAS activas
+    INSERT INTO TempCotizaciones (tipo, id_cotizacion, cotizacion, alto, largo, cantidad)
+    SELECT 'herreria', id_cotizacion, cotizacion, alto, largo, cantidad
+    FROM COTIZACIONES_HERRERIAS
+    WHERE activo = TRUE AND cotizacion = @current_cotizacion_id;
+
+    -- Insertar datos de COTIZACIONES_vidrios activas
+    INSERT INTO TempCotizaciones (tipo, id_cotizacion, cotizacion, alto, largo, cantidad)
+    SELECT 'vidrio', id_cotizacion, cotizacion, alto, largo, cantidad
+    FROM COTIZACIONES_vidrios
+    WHERE activo = TRUE AND cotizacion = @current_cotizacion_id;
+
+    -- Insertar datos de COTIZACIONES_persianas activas
+    INSERT INTO TempCotizaciones (tipo, id_cotizacion, cotizacion, alto, largo, cantidad)
+    SELECT 'persiana', id_cotizacion, cotizacion, alto, largo, cantidad
+    FROM COTIZACIONES_persianas
+    WHERE activo = TRUE AND cotizacion = @current_cotizacion_id;
+
+    -- Insertar datos de COTIZACIONES_tapices activas
+    INSERT INTO TempCotizaciones (tipo, id_cotizacion, cotizacion, alto, largo, cantidad)
+    SELECT 'tapiz', id_cotizacion, cotizacion, alto, largo, cantidad
+    FROM COTIZACIONES_tapices
+    WHERE activo = TRUE AND cotizacion = @current_cotizacion_id;
 END //
 DELIMITER ;
 
--- probanding
-/*
-SELECT @session_user_id; 
-'4'
-call CotizacionesSinVentaPorUsuario; 
-'8'
+call mostrarCotizacionesActivas();
 
-unica venta que tiene el usuario 4
-# id_venta, cotizacion, fecha_venta, subtotal, total_promocion, extras, notas, total, saldo
-'2', '7', '2024-06-30', '0', '0', '0', 'hola', '0', '0'
+select *
+from TempCotizaciones
+inner join cotizaciones on tampcotizaciones.cotizacion = cotizaciones.id_cotizacion
+inner join usuario on cotizaciones.usuario = usuario.id_usuario
+where id_usuario = @session_user_id;
 
-ahora digamos que usuario 4 hace quiere un pasamanos
+/*mostar cotizaciones activas del usuario*/
 
-insert into COTIZACIONES_HERRERIAS (cotizacion, herreria, alto, largo, cantidad)
-values ('0', '37', '1.30', '4.00', '1');
+/*ejecutar cuando salgas de la vista de las cotizaciones*/
+-- Eliminar la tabla temporal al finalizar
+DROP TEMPORARY TABLE IF EXISTS TempCotizaciones;
 
-El error que estás viendo indica que estás intentando insertar un valor en la columna cotizacion de la tabla COTIZACIONES_HERRERIAS que no existe en la tabla referenciada cotizaciones a través de la clave foránea COTIZACIONES_HERRERIAS_ibfk_1.
 
-Esto generalmente sucede cuando intentas insertar un valor en una columna que está configurada como una clave foránea (FOREIGN KEY) y ese valor no existe en la tabla referenciada.
-
+/* monto carrito
+calculos de todas las cotizaciones activas
 */
 
-
-/*sacar del carrito un producto que después podría ser echado otra vez*/
-
-
-
-/*
-si el carrito anterior ya se hizo venta
-y quiero volver a poner como activo un producto enlazado a una cotizacion previa
-entonces lo desenlaza de la anterior cotizacion y, o hace una nueva, o lo hecha al nuevo carrito
-*/
-
--- ver carrito
+-- trigger para ir actualizando el monto de la cotizacion
 
 -- ---------------------------------------------------CALCULAR PRECIOS COTIZACIONES
 -- NOTA: VERIFICAR CON EL EXCEL COTIZADOR ACTUAL DE LA CLIENTA PARA AJUSTAR CÁLCULOS
 -- cotizacion_especifica imprimir los calculos en frontend pero no guardar el monto total todavía
-no se ocupa estar logeado
-se escoge producto, lleva a la tabla de cotizacion adecuada
-productos.precio * alto*largo * cantidad
-resultado guardar en una variable en el frontend, se puede perder si se cierra la pestaña (procedimiento almacenado calcular)
 
-USAR UNA TABLA TEMPORAL PARA GUARDAR LOS DATOS DE LA COTIZACION NO GUARDADA?????
+/* subtotal
+no se ocupa estar logeado */
 
-Crear una tabla temporal: Puedes almacenar el valor en una tabla temporal que pueda ser accedida por otros procedimientos o triggers.
-    
--- trigger para ir actualizando el monto de la cotizacion,
--- esta aparte de lo del carrito porque esto se usará cada vez que haya un cambio
+DELIMITER //
+CREATE PROCEDURE calcular_subtotal(
+    IN var_tabla VARCHAR(50),
+    in var_id varchar(15)
+)
+BEGIN
+    SET @sql = CONCAT('
+        SELECT 
+          PRODUCTOS.nombre, 
+          PRODUCTOS.descripcion, 
+          PRODUCTOS.precio, 
+          COTIZACIONES_',var_tabla, '.alto, 
+          COTIZACIONES_',var_tabla, '.largo, 
+          COTIZACIONES_',var_tabla, '.cantidad, 
+          PRODUCTOS.precio * COTIZACIONES_',var_tabla, '.alto * COTIZACIONES_',var_tabla, '.largo * COTIZACIONES_',var_tabla, '.cantidad AS subtotal
+        FROM 
+          PRODUCTOS 
+          INNER JOIN COTIZACIONES_', var_tabla, ' ON PRODUCTOS.id_producto = COTIZACIONES_', var_tabla, '.',var_id,'
+          INNER JOIN VIDRIOS ON COTIZACIONES_', var_tabla, '.id_cotizacion =' , var_tabla,'.id_',var_id,';
+    ');
+
+    PREPARE stmt FROM @sql;
+    EXECUTE stmt;
+    DEALLOCATE PREPARE stmt;
+END//
+DELIMITER ;
+
+CALL calcular_subtotal('vidrios', 'vidrio');
+  
+  -- guardar el resultado del subtotal
+DELIMITER //
+CREATE PROCEDURE guardar_subtotal(
+    IN var_tabla VARCHAR(50),
+    in var_id varchar(15)
+)
+BEGIN
+    SET @sql = CONCAT('
+        UPDATE 
+        cotizaciones
+        INNER JOIN COTIZACIONES_', var_tabla, ' on COTIZACIONES.id_cotizacion = COTIZACIONES_', var_tabla, '.cotizacion 
+          INNER JOIN ',var_tabla,' ON COTIZACIONES_', var_tabla, '.',var_id,' = ', var_tabla, '.id_',var_id,' 
+          INNER JOIN PRODUCTOS ON ', var_tabla, '.producto = PRODUCTOS.id_producto 
+        SET 
+          COTIZACIONES.monto = PRODUCTOS.precio * COTIZACIONES_', var_tabla, '.alto * COTIZACIONES_', var_tabla, '.largo * COTIZACIONES_', var_tabla, '.cantidad;
+    ');
+
+    PREPARE stmt FROM @sql;
+    EXECUTE stmt;
+    DEALLOCATE PREPARE stmt;
+END//
+DELIMITER ;
+
+CALL guardar_subtotal('vidrios', 'vidrio');
 
 -- ---------------------------------------------------SOBRE LAS CITAS
 -- notificar cita cuando vaya a ser cierta fecha
+DELIMITER //
+CREATE TRIGGER trg_insert_notificacion_cita
+BEFORE INSERT ON CITAS
+FOR EACH ROW
+BEGIN
+    IF TIMESTAMPDIFF(DAY, CURDATE(), NEW.fecha) = 1 THEN
+        INSERT INTO NOTIFICACIONES (tipo, cita, mensaje, usuario, fecha)
+        VALUES ('cita', NEW.id_cita, 'Recordatorio de cita para mañana', NEW.usuario, NOW());
+    END IF;
+END//
+DELIMITER ;
+
+DELIMITER //
+CREATE TRIGGER trg_update_notificacion_cita
+BEFORE UPDATE ON CITAS
+FOR EACH ROW
+BEGIN
+    IF TIMESTAMPDIFF(DAY, CURDATE(), NEW.fecha) = 1 THEN
+        INSERT INTO NOTIFICACIONES (tipo, cita, mensaje, usuario, fecha)
+        VALUES ('cita', NEW.id_cita, 'Recordatorio de cita para mañana', NEW.usuario, NOW());
+    END IF;
+END//
+DELIMITER ;
+
 -- chcar las direcciones del usuario y depende de cual escoja insertarlo en el registro de la cita
+DELIMITER //
+CREATE TRIGGER trg_insert_cita_direccion
+BEFORE INSERT ON CITAS
+FOR EACH ROW
+BEGIN
+    DECLARE direccion_id INT;
+    DECLARE usuario_id INT;
+
+    SET usuario_id = NEW.usuario;
+
+    -- Obtener las direcciones del usuario
+    SELECT id_direccion INTO direccion_id
+    FROM DIRECCIONES
+    WHERE usuario = usuario_id
+    ORDER BY id_direccion ASC
+    LIMIT 1;
+
+    -- Si no hay direcciones, lanzar un error
+    IF direccion_id IS NULL THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'El usuario no tiene direcciones registradas';
+    END IF;
+
+    -- Asignar la dirección seleccionada a la cita
+    SET NEW.direccion = direccion_id;
+END//
+DELIMITER ;
 
 -- ---------------------------------------------------REGISTRAR Y CALCULAR ABONOS
--- historial abono
+-- que con cada nuevo abono cambie saldo
+DELIMITER //
+CREATE TRIGGER trg_update_venta_saldo
+AFTER INSERT ON HISTORIAL_ABONOS
+FOR EACH ROW
+BEGIN
+    UPDATE VENTAS
+    SET saldo = saldo - NEW.cantidad_pagada
+    WHERE id_venta = NEW.venta;
+END//
+DELIMITER ;
+
+-- aplicar promo a la venta
+DELIMITER //
+CREATE TRIGGER after_insert_promocion_aplicada
+AFTER INSERT ON PROMOCIONES_APLICADAS
+FOR EACH ROW
+BEGIN
+    DECLARE promocion_tipo ENUM('porcentual','cantidad');
+    DECLARE promocion_valor DECIMAL(10,2);
+    DECLARE subtotal INT;
+
+    -- Obtener el tipo y valor de la promoción
+    SELECT tipo_promocion, valor INTO promocion_tipo, promocion_valor
+    FROM PROMOCIONES
+    WHERE id_promocion = NEW.promocion;
+
+    -- Obtener el subtotal de la venta
+    SELECT subtotal INTO subtotal
+    FROM VENTAS
+    WHERE id_venta = NEW.venta;
+
+    -- Calcular el total de la promoción
+    IF promocion_tipo = 'porcentual' THEN
+        UPDATE VENTAS
+        SET total_promocion = subtotal * promocion_valor,
+            total = subtotal - (subtotal * promocion_valor),
+            saldo = subtotal - (subtotal * promocion_valor)
+        WHERE id_venta = NEW.venta;
+    ELSEIF promocion_tipo = 'cantidad' THEN
+        UPDATE VENTAS
+        SET total_promocion = promocion_valor,
+            total = subtotal - promocion_valor,
+            saldo = subtotal - promocion_valor
+        WHERE id_venta = NEW.venta;
+    END IF;
+END//
+DELIMITER ;
+    
 
 -- ---------------------------------------------------RECIBOS
 -- se crea una vista de todos los recibos existentes, como si fuera tabla
@@ -335,15 +588,9 @@ CALL consultar_recibos_por_fecha('2024-06-01','2024-06-30');
 -- se crea un procedimiento almacenado para que el usuario consulte sus recibos
 -- que el usuario solo pueda ver sus recibos de determianda fecha
 
-
-
--- ---------------------------------------------------RELACIONADO A LOS ABONOS Y PAGOS
--- trigger para que el saldo se actualice cada que haya un abono
-
 -- ---------------------------------------------------PARA EL ADMINISTRADOR
 -- vistas: citas.fecha, citas.status
 -- casar ventas con promociones y se crea registro en promos aplicadas
--- juntar datos para irlos registrando: historial abono,
 -- escoger un usuario, luego una cotizaciones segun la fecha, rellenar extras y notas, lo demás se autocompleta
 
 -- consultar id de usuario en base al nombre
@@ -396,41 +643,3 @@ BEGIN
 END //
 DELIMITER ;
 CALL GetProductoIdByNombre('Persiana Moderna');
-
--- el de arizpe
-DELIMITER //
-CREATE TRIGGER after_insert_promocion_aplicada
-AFTER INSERT ON PROMOCIONES_APLICADAS
-FOR EACH ROW
-BEGIN
-    DECLARE promocion_tipo ENUM('porcentual','cantidad');
-    DECLARE promocion_valor DECIMAL(10,2);
-    DECLARE subtotal INT;
-
-    -- Obtener el tipo y valor de la promoción
-    SELECT tipo_promocion, valor INTO promocion_tipo, promocion_valor
-    FROM PROMOCIONES
-    WHERE id_promocion = NEW.promocion;
-
-    -- Obtener el subtotal de la venta
-    SELECT subtotal INTO subtotal
-    FROM VENTAS
-    WHERE id_venta = NEW.venta;
-
-    -- Calcular el total de la promoción
-    IF promocion_tipo = 'porcentual' THEN
-        UPDATE VENTAS
-        SET total_promocion = subtotal * promocion_valor,
-            total = subtotal - (subtotal * promocion_valor),
-            saldo = subtotal - (subtotal * promocion_valor)
-        WHERE id_venta = NEW.venta;
-    ELSEIF promocion_tipo = 'cantidad' THEN
-        UPDATE VENTAS
-        SET total_promocion = promocion_valor,
-            total = subtotal - promocion_valor,
-            saldo = subtotal - promocion_valor
-        WHERE id_venta = NEW.venta;
-    END IF;
-END//
-DELIMITER ;
-    
