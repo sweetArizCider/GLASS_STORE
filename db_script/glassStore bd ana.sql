@@ -131,11 +131,6 @@ CREATE TABLE `USUARIOS` (
   CONSTRAINT `USUARIOS_ibfk_3` FOREIGN KEY (`usuario`) REFERENCES `PERSONA` (`correo`)
 );
 
-/*para no borrar toda la hacer esot
-ALTER TABLE `USUARIOS`
-ADD UNIQUE (`usuario`);
-*/
-
 INSERT INTO `USUARIOS` VALUES (1,73,'pycarizpehdz@gmail.com','test',5),(2,74,'pamelita@gmail.com','test',5),
 (3,75,'thania123@gmail.com','test',5),(4,76,'deleon@outlook.com','test',5),(5,164,'aitanagl@yahoo.com','test',2),
 (6,171,'benjamingr@gmail.com','test',2),(7,176,'camilahl@yahoo.com','test',2),(8,170,'catalinamg@yahoo.com','test',2),
@@ -271,12 +266,6 @@ CREATE TABLE `DIRECCIONES` (
   CONSTRAINT `unique_usuario_direccion` UNIQUE (`usuario`, `calle`, `numero`, `colonia`, `ciudad`)
 );
 
-/* para no alterar toda la tabla
-ALTER TABLE `DIRECCIONES`
-ADD CONSTRAINT `unique_usuario_direccion`
-UNIQUE (`usuario`, `calle`, `numero`, `colonia`, `ciudad`);
-*/
-
 INSERT INTO `DIRECCIONES` VALUES (6,51,'Av.Torre Latino',454,'Las Torres','torreon','casa roja'),
 (7,52,'Av. Revolución',123,'Centro','gomez palacio','edificio blanco'),
 (8,53,'Calle 5 de Mayo',789,'San Miguel','lerdo','esquina con avenida principal'),
@@ -289,7 +278,7 @@ INSERT INTO `DIRECCIONES` VALUES (6,51,'Av.Torre Latino',454,'Las Torres','torre
 (15,55,'Calle Zaragoza',456,'Del Valle','gomez palacio','entre las calles 5 de mayo y 16 de septiembre');
 
 /*SE OCUPÓ AÑADIR UN BOOL DE ACTIVO E INACTIVO EN CADA COTIZACION, PARA QUE
-SE PUEDA GUARDAR LOS DETALLES PESE A QUE EN ESE MOMENTO EL CLIENTE
+SE PUEDA GUARDAR LOS DETALLES POR SI A QUE EN ESE MOMENTO EL CLIENTE
 NO HAYA PODIDO CONTRATAR EL SERVICIO ------------------------------------------------------------------- */ 
 
 DROP TABLE IF EXISTS `COTIZACIONES_HERRERIAS`;
