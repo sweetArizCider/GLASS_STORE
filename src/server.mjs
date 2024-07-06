@@ -31,7 +31,7 @@ app.use('/register', registerRoute);
 
 app.use('/login', loginRoute);
 // Usa las rutas de recibos
-app.use('/api', recibosRoute);
+app.use('/recibos', recibosRoute);
 
 app.listen(httpConfig.port, httpConfig.hostname, () => {
     console.log(`Server running at http://${httpConfig.hostname}:${httpConfig.port}/`);

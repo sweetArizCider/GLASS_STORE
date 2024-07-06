@@ -1,15 +1,14 @@
 import express from 'express';
-import { mostrarRecibos, buscarRecibosPorNombre, buscarRecibosPorFecha } from '../controllers/validateRecibos.mjs';
+import { getRecibos, getRecibosPorNombre, getRecibosPorFecha } from '../controllers/validateRecibos.mjs';
 
 const router = express.Router();
 
-// Ruta para mostrar todos los recibos
-router.get('/recibos', mostrarRecibos);
-
-// Ruta para buscar recibos por nombre
-router.post('/recibos/nombre', buscarRecibosPorNombre);
-
-// Ruta para buscar recibos por fecha
-router.post('/recibos/fecha', buscarRecibosPorFecha);
+router.get('/', getRecibos);
+router.post('/nombre', getRecibosPorNombre);
+router.post('/fecha', getRecibosPorFecha);
 
 export default router;
+
+
+
+

@@ -1,60 +1,41 @@
-import { pool } from "../config/mysqlConfig.mjs";
+import { pool } from '../config/mysqlConfig.mjs';
 
-export const mostrar_recibos = async (req, res) => {
+export const obtenerRecibos = async () => {
     const connection = await pool.getConnection();
     try {
-        connection.query('SELECT * FROM vista_recibos', (err, results) => {
-            if (err) {
-                console.error('Error en la consulta de recibos:', err);
-                res.status(500).json({ error: 'Error interno del servidor' });
-                return;
-            }
-            res.json(results);
-        });
+        const [rows] = await connection.query('SELECT * FROM vista_recibos');
+        return rows;
     } catch (error) {
-        console.error('Error en mostrar_recibos:', error);
-        res.status(500).json({ error: 'Error interno del servidor' });
+        console.error('Error al obtener los recibos:', error);
+        throw error;
     } finally {
         connection.release();
     }
 };
 
-export const by_name = async (req, res) => {
+export const obtenerRecibosPorNombre = async (nombre_completo) => {
     const connection = await pool.getConnection();
     try {
-        const { nombre_completo } = req.body;
-        connection.query('CALL consultar_recibos_por_usuario(?)', [nombre_completo], (err, results) => {
-            if (err) {
-                console.error('Error en la consulta de recibos por nombre:', err);
-                res.status(500).json({ error: 'Error interno del servidor' });
-                return;
-            }
-            res.json(results[0]);
-        });
+        const [rows] = await connection.query('CALL consultar_recibos_por_usuario(?)', [nombre_completo]);
+        return rows;
     } catch (error) {
-        console.error('Error en by_name:', error);
-        res.status(500).json({ error: 'Error interno del servidor' });
+        console.error('Error al obtener los recibos por nombre:', error);
+        throw error;
     } finally {
         connection.release();
     }
 };
 
-export const by_date = async (req, res) => {
+export const obtenerRecibosPorFecha = async (fecha_inicio, fecha_fin) => {
     const connection = await pool.getConnection();
     try {
-        const { fecha_inicio, fecha_fin } = req.body;
-        connection.query('CALL consultar_recibos_por_fecha(?, ?)', [fecha_inicio, fecha_fin], (err, results) => {
-            if (err) {
-                console.error('Error en la consulta de recibos por fecha:', err);
-                res.status(500).json({ error: 'Error interno del servidor' });
-                return;
-            }
-            res.json(results[0]);
-        });
+        const [rows] = await connection.query('CALL consultar_recibos_por_fecha(?, ?)', [fecha_inicio, fecha_fin]);
+        return rows;
     } catch (error) {
-        console.error('Error en by_date:', error);
-        res.status(500).json({ error: 'Error interno del servidor' });
+        console.error('Error al obtener los recibos por fecha:', error);
+        throw error;
     } finally {
         connection.release();
     }
 };
+

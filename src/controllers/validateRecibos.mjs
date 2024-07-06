@@ -1,36 +1,37 @@
-import { mostrar_recibos, by_name, by_date } from "../models/mostrarRecibo.mjs";
+import { obtenerRecibos, obtenerRecibosPorNombre, obtenerRecibosPorFecha } from '../models/mostrarRecibo.mjs';
 
-// Función para mostrar todos los recibos
-export const mostrarRecibos = async (req, res) => {
+export const getRecibos = async (req, res) => {
     try {
-        const recibos = await mostrar_recibos(req, res);
+        const recibos = await obtenerRecibos();
         res.json(recibos);
     } catch (error) {
-        console.error('Error en mostrarRecibos:', error);
-        res.status(500).json({ error: 'Error interno del servidor' });
+        console.error('Error al obtener los recibos:', error);
+        res.status(500).send('Error al obtener los recibos');
     }
 };
 
-// Función para buscar recibos por nombre
-export const buscarRecibosPorNombre = async (req, res) => {
+export const getRecibosPorNombre = async (req, res) => {
+    const { nombre_completo } = req.body;
     try {
-        const recibos = await by_name(req, res);
+        const recibos = await obtenerRecibosPorNombre(nombre_completo);
         res.json(recibos);
     } catch (error) {
-        console.error('Error en buscarRecibosPorNombre:', error);
-        res.status(500).json({ error: 'Error interno del servidor' });
+        console.error('Error al obtener los recibos por nombre:', error);
+        res.status(500).send('Error al obtener los recibos por nombre');
     }
 };
 
-// Función para buscar recibos por fecha
-export const buscarRecibosPorFecha = async (req, res) => {
+export const getRecibosPorFecha = async (req, res) => {
+    const { fecha_inicio, fecha_fin } = req.body;
     try {
-        const recibos = await by_date(req, res);
+        const recibos = await obtenerRecibosPorFecha(fecha_inicio, fecha_fin);
         res.json(recibos);
     } catch (error) {
-        console.error('Error en buscarRecibosPorFecha:', error);
-        res.status(500).json({ error: 'Error interno del servidor' });
+        console.error('Error al obtener los recibos por fecha:', error);
+        res.status(500).send('Error al obtener los recibos por fecha');
     }
 };
+
+
 
 
