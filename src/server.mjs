@@ -2,6 +2,7 @@ import { httpConfig } from './config/httpConfig.mjs';
 import express from 'express';
 import registerRoute from './routes/register.mjs';
 import loginRoute from './routes/login.mjs';
+import recibosRoute from './routes/recibos.mjs';  // Importa la ruta para recibos
 import bodyParser from 'body-parser';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -29,6 +30,8 @@ app.get('/', (req, res) => {
 app.use('/register', registerRoute);
 
 app.use('/login', loginRoute);
+// Usa las rutas de recibos
+app.use('/api', recibosRoute);
 
 app.listen(httpConfig.port, httpConfig.hostname, () => {
     console.log(`Server running at http://${httpConfig.hostname}:${httpConfig.port}/`);
