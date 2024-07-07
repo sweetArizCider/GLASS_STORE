@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
     function showFilter(type) {
         const filtersDiv = document.getElementById('filters');
         filtersDiv.innerHTML = ''; // Limpiar cualquier filtro existente
@@ -43,7 +43,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function fetchRecibos() {
         try {
-            const response = await fetch('/api/recibos');
+            const response = await fetch('/recibos'); // Endpoint para obtener todos los recibos
+            if (!response.ok) {
+                throw new Error('Error al obtener los recibos');
+            }
             const recibos = await response.json();
             displayRecibos(recibos);
         } catch (error) {
@@ -53,13 +56,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function fetchRecibosByNombre(nombre) {
         try {
-            const response = await fetch('/api/recibos/nombre', {
+            const response = await fetch('/recibos/nombre', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json',
+                    'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ nombre_completo: nombre }),
+                body: JSON.stringify({ nombre_completo: nombre })
             });
+            if (!response.ok) {
+                throw new Error('Error al obtener los recibos por nombre');
+            }
             const recibos = await response.json();
             displayRecibos(recibos);
         } catch (error) {
@@ -69,13 +75,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function fetchRecibosByFecha(fechaInicio, fechaFin) {
         try {
-            const response = await fetch('/api/recibos/fecha', {
+            const response = await fetch('/recibos/fecha', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json',
+                    'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ fecha_inicio: fechaInicio, fecha_fin: fechaFin }),
+                body: JSON.stringify({ fecha_inicio: fechaInicio, fecha_fin: fechaFin })
             });
+            if (!response.ok) {
+                throw new Error('Error al obtener los recibos por fecha');
+            }
             const recibos = await response.json();
             displayRecibos(recibos);
         } catch (error) {
@@ -105,10 +114,8 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    fetchRecibos();
+    // Llamada inicial para mostrar todos los recibos
+    await fetchRecibos();
     window.showFilter = showFilter;
 });
-
-
-
 

@@ -1,0 +1,28 @@
+/* Estilos CSS básicos */
+body {
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    max-width: 800px;
+}
+
+#filters {
+    margin-bottom: 20px;
+}
+
+#recibos-table {
+    margin-top: 20px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.table {
+    margin-top: 15px;
+}
+
+.btn-primary {
+    margin-right: 10px;
+}

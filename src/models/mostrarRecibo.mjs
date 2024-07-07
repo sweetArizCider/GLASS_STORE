@@ -39,3 +39,4 @@ export const obtenerRecibosPorFecha = async (fecha_inicio, fecha_fin) => {
     }
 };
 
+
