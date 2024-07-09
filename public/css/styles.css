@@ -1,12 +1,16 @@
 /*importar los tipos de letra*/
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 /*ajustes previos*/
-*{
+
+body, html {
   margin: 0;
   padding: 0;
-}
-body, html {
+  height: 100%;
   overflow-x: hidden;
+  font-size: 1rem; 
+}
+html {
+  scroll-behavior: smooth;
 }
 
 /*  barra superior */
@@ -46,8 +50,7 @@ body, html {
 .main-content{
   width: 100%;
   height: 90vh;
-  background: linear-gradient(180deg, rgba(19, 38, 68, 0.26) 0%, rgba(19, 38, 68, 0.26) 100%), url(../img/index/background.jpeg )center/cover no-repeat;
-  
+  background: linear-gradient(180deg, rgba(19, 38, 68, 0.26) 0%, rgba(19, 38, 68, 0.26) 100%), url(../img/index/background.jpeg)center/cover no-repeat;
   background-size: cover;
   background-position: 70%;
 }
@@ -62,7 +65,7 @@ body, html {
   align-items: center;
 }
 .navbar {
-  position: sticky;
+  position: sticky !important;
   top: 0;
   z-index: 1000;
 }
@@ -77,17 +80,42 @@ body, html {
 .nav-left{
   margin-left: 7em;
 }
-
-
+.offcanvas {
+  width: 250px;
+  background-color: #132644 !important;
+  color: #fff !important; 
+}
+.offcanvas-start {
+  width: 250px;
+  background-color: #132644;
+}
+.offcanvas-body {
+  padding: 0;
+}
+.offcanvas-body .nav-link {
+  color: #fff !important;
+  padding: 10px 20px;
+  font-size: 14px;
+}
+.offcanvas .btn-close {
+  background-color: white !important; 
+  border-radius: 50%;
+}
+.offcanvas-title{
+  font-family: Montserrat;
+}
+.nav-off-margin{
+  margin-left: 0;
+}
 /* inicio del main */
 .content{
   width: 50%;
-  margin-top: 150px;
+  padding-top:  150px;
   margin-left: 60px;
 
 }
 .content h1{
-  font-size: 2.2em;
+  font-size: 2rem;
   font-weight: bolder;
   font-family: Montserrat;
   color: #fff;
@@ -96,7 +124,7 @@ body, html {
   margin-top: 1em;
   color: #fff;
   font-family: Inter;
-  font-size: .9em;
+  font-size: .8rem;
 }
 
 .banner-boton{
@@ -108,10 +136,13 @@ body, html {
   font-family: Inter;
   font-weight: 700;
   letter-spacing: 1px;
-  color: #fff;
   transition: 0.5s ease;
   cursor: pointer;
-
+  color: #fff;
+}
+.banner-boton a{
+  text-decoration: none;
+  
 }
 #btn1 button:hover{
   background-color: rgba(19, 38, 68, 1);
@@ -153,7 +184,10 @@ body, html {
   transition: 0.5s ease;
   cursor: pointer;
 }
-
+#btn2 button:hover{
+  background: transparent;
+  color: #132644;
+}
 
 /*Detalles*/
 .font-mont{
@@ -193,10 +227,7 @@ body, html {
 .stars{
   margin-bottom: 1em;
 }
-#btn2 button:hover{
-  background: transparent;
-  color: #132644;
-}
+
 
 .agendar-boton{
   width: 150px;
@@ -215,13 +246,14 @@ body, html {
   background-color: #fff;
   color: #132644;
 }
+
 /*Seccion de productos mas vendidos*/
 .icon-overlay-container {
   position: absolute;
   top: 9.5em;
   right: 10px;
-  width: 40px; /* Ajusta el tamaño del contenedor */
-  height: 40px; /* Ajusta el tamaño del contenedor */
+  width: 40px; 
+  height: 40px; 
   background-color: white;
   border-radius: 50%;
   display: flex;
@@ -232,52 +264,144 @@ body, html {
   cursor: pointer;
 }
 .icon-overlay {
-  width: 24px; /* Ajusta el tamaño del ícono */
-  height: 24px; /* Ajusta el tamaño del ícono */
+  width: 24px; 
+  height: 24px;
+}
+.title-card-new{
+  font-family: Inter;
+  font-size: 1.1em;
+  font-weight: 500;
+}
+.card-price{
+  font-family: Inter;
+  font-size: 1.4em;
+  font-weight: 800;
+  color: #132644;
+}
+.button-products{
+  width: 150px;
+  height: 30px;
+  background: #132644;
+  border: 1.5px solid #132644;
+  border-radius: 30px;
+  font-family: Inter;
+  font-size: .9em;
+  font-weight: 600;
+  letter-spacing: 1px ;
+  color: #fff;
+  transition: 0.5s ease;
+  cursor: pointer;
 }
 #btn3{
   text-align: center;
 }
-#btn3 button{
-  width: 150px;
-  height: 30px;
-  background: transparent;
-  border: 1px solid black;
-  transition: 0.5s ease;
-  cursor: pointer;
-}
 #btn3 button:hover{
-  background-color: rgba(238,224,208);
+  background: transparent;
+  color: #132644;
+}
+/*Sobre nosotros*/
+.img-nosotros{
+  width: 80%;
+  height: 45vh;
+  align-items: center;
+  border-radius: 8px;
+}
+.nosotros{
+  background-color: rgba(19, 38, 68, .04);
+  margin-top: 4em;
+  margin-bottom: 4em;
+  padding-bottom: 5em;
+  padding-top: 1em;
+  border-radius: 8px;
+}
+.title-nosotros{
+  font-size: 2em;
+  font-weight: 800;
+  font-family: Montserrat;
+}
+.text-nosotros{
+  font-weight: 600;
+  padding-right: 3em;
+}
+mark{
+  background: #4AB3D5 !important;
+  color: #fff !important;
 }
 
+/*historias de clientes*/
+.container-historias{
+  border: #d8d8d8 solid 1px;
+  border-radius: 8px;
+  padding: 2em;
+  height: 50vh;
+  margin-top: 3.5em;
+}
+.carousel-control-next{
+  margin-right: -7em;
+}
+.carousel-control-prev{
+  margin-left: -7em;
+}
+.carousel-control-next-icon{
+  background-image: url(../img/index/arrowNext.svg) !important;
+  width: 100px; 
+  height: 100px; 
+  border-radius: 50%; 
+  background-color: #e1e1e1; 
+  transition: background-color 0.3s ease; 
+}
+.carousel-control-prev-icon{
+  background-image: url(../img/index/arrowPrev.svg) !important;
+  width: 100px; 
+  height: 100px; 
+  border-radius: 50%; 
+  background-color: #e1e1e1; 
+  transition: background-color 0.3s ease; 
+}
+.testimonyImg{
+  width: 100%;
+  height: 40vh !important;
+  border-radius: 8px;
+}
+.subtitle{
+  font-family: Montserrat;
+  font-weight: 800;
+}
+.testimonyReview{
+  font-weight: 600;
+  padding-right: 3em;
+}
 
-#footer{
+/*footer*/
+
+.footer{
   width: 100%;
   background-color: #132644;
   margin-top: 100px;
   margin-right: 0;
   margin-left: 0;
+  padding-top: 2em;
   background-size: cover;
   background-position: 70%;
+  font-family: Inter;
 }
-#footer h1{
+.footer h5{
   color: white;
   padding-top: 30px;
+  font-family: Montserrat;
+  font-weight: 800;
+
 }
-#footer p{
+.footer p{
   color: white;
+  font-size: .8em;
 }
-.icons i{
-  color: rgba(238,224,208);
-  font-size: 30px;
-  cursor: pointer;
+.footer a{
+  font-size: .8em;
 }
-.copyright{
-  color: white;
-  margin-top: 20px;
-}
-.credite{
-  color: white;
+.copy{
+  background-color: #4AB3D5;
+  margin-top: 1em;
 }
 
 /* boton flotante de whatsapp */
@@ -300,10 +424,85 @@ body, html {
 }
 
 #wa-button a:hover {
-  background-color: #1abc9c; 
+  background-color: #4AB3D5; 
 }
 
 #wa-button img {
   width: 100%; 
   height: auto; 
+}
+
+/*----------------------------------------------detalles------------------------------------------------------*/
+
+/*sombras en las cards*/
+.shadow{
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0.55);
+}
+@media (max-width: 767.98px) {
+  .offcanvas {
+      width: 250px;
+  }
+  .container-historias{
+    height: 115vh;
+  }
+}
+@media (max-width: 992px) {
+  .container-historias{
+    height: 90vh;
+  }
+}
+
+/*---------------------------------------------Navegacion--------------------------------------------------*/
+.login-form {
+  display: none;
+  position: absolute;
+  top: 40px;
+  right: 0;
+  background-color: white;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 200px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  z-index: 10000;
+}
+.login-form input {
+  width: 100%;
+  padding: 10px;
+  margin: 5px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+.login-form button {
+  width: 150px;
+  height: 30px;
+  background: #132644;
+  border: 1.5px solid #132644;
+  border-radius: 30px;
+  font-family: Inter;
+  font-size: .9em;
+  font-weight: 600;
+  letter-spacing: 1px ;
+  color: #fff;
+  transition: 0.5s ease;
+  cursor: pointer;
+}
+.pop-login-p{
+  font-size: .7rem;
+  font-family: Inter;
+}
+.pop-login-create{
+  font-size: .8rem;
+  color: #4AB3D5 !important;
+  text-decoration: none !important;
+}
+.space-cero{
+  margin-top: -1em;
+}
+/*modal*/
+.boton-modal{
+  padding: 10px 10px;
+  height: 6vh;
+  width: 200px;
+  font-size: .9rem;
 }
