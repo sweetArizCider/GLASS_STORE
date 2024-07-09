@@ -42,6 +42,28 @@ SELECT @session_user_id;
 -- desactivar cuenta
 -- si se desactiva la cuenta se quedan innacesibles sus cotizaciones y cotizaciones espeficias no enlazadas a ventas, los favoritos, las notificaciones
 -- se conserva para que pueda checar el administrador sus ventas asociadas, asi como lo que se le vendio, el historial de abonos, las promos
+DELIMITER //
+CREATE PROCEDURE DesactivarCuenta()
+BEGIN
+    -- Validar que la variable de sesión del usuario esté definida
+    IF @session_user_id IS NULL THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'No hay sesión de usuario válida. Autentíquese primero.';
+    END IF;
+
+    -- Desactivar la cuenta del usuario
+    UPDATE USUARIOS
+    SET status = 'inactivo'
+    WHERE id_usuario = @session_user_id;
+    -- Devolver mensaje de éxito
+    SELECT 'Cuenta desactivada correctamente' AS mensaje;
+END //
+DELIMITER ;
+
+-- Ejemplo de cómo establecer @session_user_id
+CALL AuthenticateUser('deleon@outlook.com', 'test'); -- Esto establece @session_user_id si la autenticación es exitosa
+-- Luego puedes desactivar la cuenta usando
+CALL DesactivarCuenta();
 
 -- consultar favoritos por usuario
 DELIMITER //
@@ -216,7 +238,7 @@ BEGIN
         UPDATE cotizaciones_persianas
         SET cotizacion = @current_cotizacion_id
         WHERE activo = TRUE AND id_cotizacion = var_id;
- 	elseif var_tabla = 'vidrios' THEN
+elseif var_tabla = 'vidrios' THEN
         UPDATE cotizaciones_vidrios
         SET cotizacion = @current_cotizacion_id
         WHERE activo = TRUE AND id_cotizacion = var_id;
@@ -267,9 +289,7 @@ BEGIN
     WHERE id_cotizacion = var_id_cotizacion;
 END;
 
-
 /* mostrar todas las cotizaciones activas */
-
 DELIMITER //
 CREATE PROCEDURE mostrarCotizacionesActivas()
 BEGIN
@@ -314,11 +334,89 @@ call mostrarCotizacionesActivas();
 
 select *
 from TempCotizaciones
-inner join cotizaciones on tampcotizaciones.cotizacion = cotizaciones.id_cotizacion
-inner join usuario on cotizaciones.usuario = usuario.id_usuario
+inner join cotizaciones on TempCotizaciones.cotizacion = cotizaciones.id_cotizacion
+inner join usuarios on cotizaciones.usuario = usuarios.id_usuario
 where id_usuario = @session_user_id;
 
+-- Configura las variables
+SET @current_cotizacion_id = 25; -- Reemplaza con el valor de cotización correspondiente
+SET @session_user_id = 4; -- Reemplaza con el valor de usuario correspondiente
+
+-- Llama al procedimiento almacenado
+CALL mostrarCotizacionesActivas();
+
+-- Verifica los datos en la tabla temporal
+SELECT *
+FROM TempCotizaciones;
+
+-- Realiza la consulta completa
+SELECT *
+FROM TempCotizaciones
+INNER JOIN cotizaciones ON TempCotizaciones.cotizacion = cotizaciones.id_cotizacion
+INNER JOIN usuarios ON cotizaciones.usuario = usuarios.id_usuario
+WHERE id_usuario = @session_user_id;
+
 /*mostar cotizaciones activas del usuario*/
+DELIMITER //
+
+CREATE PROCEDURE mostrarCotizacionesActivasPorUsuario(IN session_user_id INT)
+BEGIN
+    -- Crear tabla temporal para almacenar resultados
+    CREATE TEMPORARY TABLE IF NOT EXISTS TempCotizacionesActivasPorUsuario (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        tipo VARCHAR(50),
+        id_cotizacion INT,
+        cotizacion INT,
+        alto DECIMAL(10,2),
+        largo DECIMAL(10,2),
+        cantidad INT
+    );
+
+    -- Insertar cotizaciones de herrería activas por usuario
+    INSERT INTO TempCotizacionesActivasPorUsuario (tipo, id_cotizacion, cotizacion, alto, largo, cantidad)
+    SELECT 'herreria', CH.id_cotizacion, CH.cotizacion, CH.alto, CH.largo, CH.cantidad
+    FROM COTIZACIONES_HERRERIAS CH
+    INNER JOIN COTIZACIONES C ON CH.id_cotizacion = C.id_cotizacion
+    WHERE CH.activo = TRUE AND C.usuario = session_user_id;
+
+    -- Insertar cotizaciones de vidrio activas por usuario
+    INSERT INTO TempCotizacionesActivasPorUsuario (tipo, id_cotizacion, cotizacion, alto, largo, cantidad)
+    SELECT 'vidrio', CV.id_cotizacion, CV.cotizacion, CV.alto, CV.largo, CV.cantidad
+    FROM COTIZACIONES_VIDRIOS CV
+    INNER JOIN COTIZACIONES C ON CV.id_cotizacion = C.id_cotizacion
+    WHERE CV.activo = TRUE AND C.usuario = session_user_id;
+
+    -- Insertar cotizaciones de persiana activas por usuario
+    INSERT INTO TempCotizacionesActivasPorUsuario (tipo, id_cotizacion, cotizacion, alto, largo, cantidad)
+    SELECT 'persiana', CP.id_cotizacion, CP.cotizacion, CP.alto, CP.largo, CP.cantidad
+    FROM COTIZACIONES_PERSIANAS CP
+    INNER JOIN COTIZACIONES C ON CP.id_cotizacion = C.id_cotizacion
+    WHERE CP.activo = TRUE AND C.usuario = session_user_id;
+
+    -- Insertar cotizaciones de tapiz activas por usuario
+    INSERT INTO TempCotizacionesActivasPorUsuario (tipo, id_cotizacion, cotizacion, alto, largo, cantidad)
+    SELECT 'tapiz', CT.id_cotizacion, CT.cotizacion, CT.alto, CT.largo, CT.cantidad
+    FROM COTIZACIONES_TAPICES CT
+    INNER JOIN COTIZACIONES C ON CT.id_cotizacion = C.id_cotizacion
+    WHERE CT.activo = TRUE AND C.usuario = session_user_id;
+
+    -- Seleccionar datos completos de las cotizaciones activas del usuario
+    SELECT *
+    FROM TempCotizacionesActivasPorUsuario;
+END //
+DELIMITER ;
+CALL mostrarCotizacionesActivasPorUsuario(@session_user_id);
+SET @session_user_id = 4;
+SELECT * FROM TempCotizacionesActivasPorUsuario;
+
+INSERT INTO COTIZACIONES_VIDRIOS (cotizacion, vidrio, alto, largo, grosor, cantidad, activo)
+VALUES (25, 1, 1.5, 2.0,1, 5, TRUE),
+    (25, 2, 2.0, 3.0,1, 3, TRUE),
+    (25, 3, 1.0, 1.5,1, 2, TRUE);
+
+/*ejecutar cuando salgas de la vista de las cotizaciones*/
+-- Eliminar la tabla temporal al finalizar
+DROP TEMPORARY TABLE IF EXISTS TempCotizaciones;
 
 /*ejecutar cuando salgas de la vista de las cotizaciones*/
 -- Eliminar la tabla temporal al finalizar
@@ -330,6 +428,175 @@ calculos de todas las cotizaciones activas
 */
 
 -- trigger para ir actualizando el monto de la cotizacion
+-- son dos trigger por cada tipo de cotizacion ya sea persina, herreria, tapices y vidrios , 
+-- un insert y un update por cada uno y tmabuen tien que tener si la cotizacion esta activa o inactiva 
+
+/*TRIGGER COTIZACIONES_HERRERIAS 
+INSERT*/
+DELIMITER //
+
+CREATE TRIGGER insertar_cotizacion_herreria_trigger
+AFTER INSERT ON COTIZACIONES_HERRERIAS
+FOR EACH ROW
+BEGIN
+    DECLARE monto_herreria DECIMAL(10, 2);
+    SELECT SUM(alto * largo * cantidad) INTO monto_herreria
+    FROM COTIZACIONES_HERRERIAS
+    WHERE cotizacion = NEW.cotizacion AND activo = TRUE;
+    
+    IF monto_herreria IS NOT NULL THEN
+        UPDATE COTIZACIONES SET monto = monto_herreria WHERE id_cotizacion = NEW.cotizacion;
+    END IF;
+END //
+
+DELIMITER ;
+-- Insertar una nueva cotización de herrería
+INSERT INTO COTIZACIONES_HERRERIAS (cotizacion, herreria, alto, largo, cantidad)
+VALUES (1, 1, 1.20, 1.00, 1);
+-- Actualizar una cotización de herrería (por ejemplo, cambiar la cantidad)
+UPDATE COTIZACIONES_HERRERIAS
+SET cantidad = 2
+WHERE id_cotizacion = 1;
+-- Verificar el monto actualizado en la tabla COTIZACIONES para la cotización específica
+SELECT id_cotizacion, monto
+FROM COTIZACIONES
+WHERE id_cotizacion = 1;
+/*TRIGGER COTIZACIONES_HERRERIAS 
+UPDATE*/
+DELIMITER //
+
+CREATE TRIGGER actualizar_cotizacion_herreria_trigger
+AFTER UPDATE ON COTIZACIONES_HERRERIAS
+FOR EACH ROW
+BEGIN
+    DECLARE monto_herreria DECIMAL(10, 2);
+    SELECT SUM(alto * largo * cantidad) INTO monto_herreria
+    FROM COTIZACIONES_HERRERIAS
+    WHERE cotizacion = NEW.cotizacion AND activo = TRUE;
+    
+    IF monto_herreria IS NOT NULL THEN
+        UPDATE COTIZACIONES SET monto = monto_herreria WHERE id_cotizacion = NEW.cotizacion;
+    END IF;
+END //
+DELIMITER ;
+/*TRIGGER COTIZACIONES_PERSIANAS 
+INSERT*/
+DELIMITER //
+
+CREATE TRIGGER insertar_cotizacion_persiana_trigger
+AFTER INSERT ON COTIZACIONES_PERSIANAS
+FOR EACH ROW
+BEGIN
+    DECLARE monto_persiana DECIMAL(10, 2);
+    SELECT SUM(alto * largo * cantidad) INTO monto_persiana
+    FROM COTIZACIONES_PERSIANAS
+    WHERE cotizacion = NEW.cotizacion AND activo = TRUE;
+    
+    IF monto_persiana IS NOT NULL THEN
+        UPDATE COTIZACIONES SET monto = monto_persiana WHERE id_cotizacion = NEW.cotizacion;
+    END IF;
+END //
+
+DELIMITER ;
+
+/*TRIGGER COTIZACIONES_PERSIANAS 
+UPDATE*/
+DELIMITER //
+
+CREATE TRIGGER actualizar_cotizacion_persiana_trigger
+AFTER UPDATE ON COTIZACIONES_PERSIANAS
+FOR EACH ROW
+BEGIN
+    DECLARE monto_persiana DECIMAL(10, 2);
+    SELECT SUM(alto * largo * cantidad) INTO monto_persiana
+    FROM COTIZACIONES_PERSIANAS
+    WHERE cotizacion = NEW.cotizacion AND activo = TRUE;
+    
+    IF monto_persiana IS NOT NULL THEN
+        UPDATE COTIZACIONES SET monto = monto_persiana WHERE id_cotizacion = NEW.cotizacion;
+    END IF;
+END //
+
+DELIMITER ;
+
+/*TRIGGER COTIZACIONES_TAPICES 
+INSERT*/
+DELIMITER //
+
+CREATE TRIGGER insertar_cotizacion_tapiz_trigger
+AFTER INSERT ON COTIZACIONES_TAPICES
+FOR EACH ROW
+BEGIN
+    DECLARE monto_tapiz DECIMAL(10, 2);
+    SELECT SUM(alto * largo * cantidad) INTO monto_tapiz
+    FROM COTIZACIONES_TAPICES
+    WHERE cotizacion = NEW.cotizacion AND activo = TRUE;
+    
+    IF monto_tapiz IS NOT NULL THEN
+        UPDATE COTIZACIONES SET monto = monto_tapiz WHERE id_cotizacion = NEW.cotizacion;
+    END IF;
+END //
+
+DELIMITER ;
+/*TRIGGER COTIZACIONES_TAPICES 
+UPDATE*/
+DELIMITER //
+
+CREATE TRIGGER actualizar_cotizacion_tapiz_trigger
+AFTER UPDATE ON COTIZACIONES_TAPICES
+FOR EACH ROW
+BEGIN
+    DECLARE monto_tapiz DECIMAL(10, 2);
+    SELECT SUM(alto * largo * cantidad) INTO monto_tapiz
+    FROM COTIZACIONES_TAPICES
+    WHERE cotizacion = NEW.cotizacion AND activo = TRUE;
+    
+    IF monto_tapiz IS NOT NULL THEN
+        UPDATE COTIZACIONES SET monto = monto_tapiz WHERE id_cotizacion = NEW.cotizacion;
+    END IF;
+END //
+
+DELIMITER ;
+
+/*TRIGGER COTIZACIONES_VIDRIOS
+INSERT*/
+DELIMITER //
+
+CREATE TRIGGER insertar_cotizacion_vidrio_trigger
+AFTER INSERT ON COTIZACIONES_VIDRIOS
+FOR EACH ROW
+BEGIN
+    DECLARE monto_vidrio DECIMAL(10, 2);
+    SELECT SUM(alto * largo * grosor * cantidad) INTO monto_vidrio
+    FROM COTIZACIONES_VIDRIOS
+    WHERE cotizacion = NEW.cotizacion AND activo = TRUE;
+    
+    IF monto_vidrio IS NOT NULL THEN
+        UPDATE COTIZACIONES SET monto = monto_vidrio WHERE id_cotizacion = NEW.cotizacion;
+    END IF;
+END //
+
+DELIMITER ;
+
+/*TRIGGER COTIZACIONES_VIDRIOS
+UPDATE*/
+DELIMITER //
+
+CREATE TRIGGER actualizar_cotizacion_vidrio_trigger
+AFTER UPDATE ON COTIZACIONES_VIDRIOS
+FOR EACH ROW
+BEGIN
+    DECLARE monto_vidrio DECIMAL(10, 2);
+    SELECT SUM(alto * largo * grosor * cantidad) INTO monto_vidrio
+    FROM COTIZACIONES_VIDRIOS
+    WHERE cotizacion = NEW.cotizacion AND activo = TRUE;
+    
+    IF monto_vidrio IS NOT NULL THEN
+        UPDATE COTIZACIONES SET monto = monto_vidrio WHERE id_cotizacion = NEW.cotizacion;
+    END IF;
+END //
+
+DELIMITER ;
 
 -- ---------------------------------------------------CALCULAR PRECIOS COTIZACIONES
 -- NOTA: VERIFICAR CON EL EXCEL COTIZADOR ACTUAL DE LA CLIENTA PARA AJUSTAR CÁLCULOS
@@ -522,43 +789,79 @@ select * from vista_recibos;
 
 -- se crea un procedimiento almacenado para consultar solo los recibos de determinado usuario
 DELIMITER //
-CREATE PROCEDURE consultar_recibos_por_usuario(
-	IN nombre_completo VARCHAR(150)
-    )
+CREATE PROCEDURE consultar_recibos_por_usuario(IN nombre_completo VARCHAR(150))
 BEGIN
-    SELECT 
-		vista_recibos.cotizacion_fecha,
-		vista_recibos.cotizacion_monto,
-		vista_recibos.fecha_venta,
-		vista_recibos.subtotal,
-		vista_recibos.total_promocion,
-		vista_recibos.extras,
-		vista_recibos.total,
-		vista_recibos.fecha_pago,
-		vista_recibos.cantidad_pagada,
-		vista_recibos.saldo
-    FROM 
-        vista_recibos
-    JOIN 
-        ventas ON vista_recibos.fecha_venta = ventas.fecha_venta
-    JOIN 
-        USUARIOS ON ventas.usuario = usuarios.id_usuario
-    JOIN 
-        PERSONA ON usuarios.id_persona = persona.id_persona
-    WHERE 
-        CONCAT(persona.nombres, ' ', persona.apellido_p, ' ', persona.apellido_m) = nombre_completo;
+  SELECT 
+    vr.cotizacion_fecha,
+    vr.cotizacion_monto,
+    vr.fecha_venta,
+    vr.subtotal,
+    vr.total_promocion,
+    vr.extras,
+    vr.total,
+    vr.fecha_pago,
+    vr.cantidad_pagada,
+    vr.saldo
+FROM 
+    vista_recibos vr
+JOIN ventas v ON vr.fecha_venta = v.fecha_venta
+JOIN cotizaciones c ON v.cotizacion = c.id_cotizacion
+JOIN usuarios u ON c.usuario = u.id_usuario
+JOIN persona p ON u.id_persona = p.id_persona
+WHERE CONCAT(p.nombres, ' ', p.apellido_p, ' ', p.apellido_m) = nombre_completo;
 END //
+
 DELIMITER ;
 
 CALL consultar_recibos_por_usuario('Carlos Arizpe Hernandez');
 
 -- se crea un procedimiento almacenado para consultar solo los recibos de determinada fecha
 DELIMITER //
+
 CREATE PROCEDURE consultar_recibos_por_fecha(
 	IN fecha_pago_1 datetime,
 	IN fecha_pago_2 datetime
     )
 BEGIN
+    SELECT 
+		vr.cotizacion_fecha,
+		vr.cotizacion_monto,
+		vr.fecha_venta,
+		vr.subtotal,
+		vr.total_promocion,
+		vr.extras,
+		vr.total,
+		vr.fecha_pago,
+		vr.cantidad_pagada,
+		vr.saldo
+    FROM 
+        vista_recibos vr
+    WHERE 
+        vr.fecha_pago between fecha_pago_1 and fecha_pago_2;
+END //
+DELIMITER ;
+CALL consultar_recibos_por_fecha('2024-06-01','2024-06-30');
+
+SELECT * FROM usuarios WHERE id_usuario = 1;
+
+SELECT * FROM persona WHERE id_persona  = 73;
+
+INSERT INTO cotizaciones (usuario, fecha, monto)
+VALUES (1, '2024-06-30', 1500.00);
+-- Suponiendo que id_cotizacion = 1 (debes usar el ID real que se generó)
+INSERT INTO ventas (fecha_venta, subtotal, total_promocion, extras, total, saldo, cotizacion)
+VALUES ('2024-06-30', 1200.00, 100.00, 50.00, 1350.00, 1350.00, 49);
+-- Suponiendo que id_venta = 1 (debes usar el ID real que se generó)
+INSERT INTO historial_abonos (fecha_pago, cantidad_pagada, venta)
+VALUES ('2024-06-30', 1350.00, 2);
+
+-- se crea un procedimiento almacenado para que el usuario consulte sus recibos
+DELIMITER //
+CREATE PROCEDURE mostrar_mis_recibos()
+BEGIN
+    DECLARE usuario_id INT;
+    SET usuario_id = (SELECT id_usuario FROM usuarios WHERE usuario = USER());
+    
     SELECT 
 		vista_recibos.cotizacion_fecha,
 		vista_recibos.cotizacion_monto,
@@ -575,23 +878,106 @@ BEGIN
     JOIN 
         ventas ON vista_recibos.fecha_venta = ventas.fecha_venta
     JOIN 
-        USUARIOS ON ventas.usuario = usuarios.id_usuario
-    JOIN 
-        PERSONA ON usuarios.id_persona = persona.id_persona
+        cotizaciones ON ventas.cotizacion = cotizaciones.id_cotizacion
     WHERE 
-        vista_recibos.fecha_pago between fecha_pago_1 and fecha_pago_2;
+        cotizaciones.usuario = usuario_id;
 END //
 DELIMITER ;
-
-CALL consultar_recibos_por_fecha('2024-06-01','2024-06-30');
-
--- se crea un procedimiento almacenado para que el usuario consulte sus recibos
+-- Mostrar todos los recibos del usuario logeado
+CALL mostrar_mis_recibos();
 -- que el usuario solo pueda ver sus recibos de determianda fecha
+DELIMITER //
+
+CREATE PROCEDURE buscar_recibos_por_fecha(
+    IN fecha_pago_1 datetime,
+    IN fecha_pago_2 datetime
+)
+BEGIN
+    DECLARE usuario_id INT;
+    SET usuario_id = (SELECT id_usuario FROM usuarios WHERE usuario = USER());
+    
+    SELECT 
+        vr.cotizacion_fecha,
+        vr.cotizacion_monto,
+        vr.fecha_venta,
+        vr.subtotal,
+        vr.total_promocion,
+        vr.extras,
+        vr.total,
+        vr.fecha_pago,
+        vr.cantidad_pagada,
+        vr.saldo
+    FROM 
+        vista_recibos vr
+    JOIN 
+        ventas v ON vr.fecha_venta = v.fecha_venta
+    JOIN 
+        cotizaciones c ON v.cotizacion = c.id_cotizacion
+    JOIN 
+        usuarios u ON c.usuario = u.id_usuario
+    WHERE 
+        u.id_usuario = usuario_id
+        AND vr.fecha_pago BETWEEN fecha_pago_1 AND fecha_pago_2;
+END //
+
+DELIMITER ;
+CALL buscar_recibos_por_fecha('2024-06-01', '2024-06-30');
 
 -- ---------------------------------------------------PARA EL ADMINISTRADOR
 -- vistas: citas.fecha, citas.status
+CREATE VIEW vista_citas_admin AS
+SELECT c.fecha, c.status, c.id_cita, p.nombres, p.apellido_p, d.calle, d.numero, d.colonia, d.ciudad, d.referencias
+FROM CITAS c
+JOIN USUARIOS u ON c.usuario = u.id_usuario
+JOIN PERSONA p ON u.id_persona = p.id_persona
+JOIN DIRECCIONES d ON c.direccion = d.id_direccion;
+
+SELECT * FROM vista_citas_admin;
 -- casar ventas con promociones y se crea registro en promos aplicadas
+
 -- escoger un usuario, luego una cotizaciones segun la fecha, rellenar extras y notas, lo demás se autocompleta
+DELIMITER //
+
+CREATE PROCEDURE crearVenta(
+    IN usuario_id INT,
+    IN cotizacion_id INT,
+    IN extras INT,
+    IN notas VARCHAR(300)
+)
+BEGIN
+    DECLARE subtotal INT;
+    DECLARE total INT;
+    DECLARE saldo INT;
+    DECLARE fecha_venta DATE;
+    DECLARE rows_found INT; -- Variable para contar las filas afectadas por la consulta
+
+    -- Obtener fecha y subtotal de la cotización
+    SELECT fecha, monto INTO fecha_venta, subtotal
+    FROM COTIZACIONES
+    WHERE id_cotizacion = cotizacion_id;
+
+    -- Obtener el número de filas afectadas por la consulta anterior
+    SET rows_found = ROW_COUNT();
+
+    -- Verificar si se encontró la cotización
+    IF rows_found = 0 THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'La cotización especificada no existe.';
+    END IF;
+
+    -- Calcular total y saldo inicial (suponiendo que son iguales al subtotal para empezar)
+    SET total = subtotal;
+    SET saldo = subtotal;
+
+    -- Insertar la nueva venta
+    INSERT INTO VENTAS (cotizacion, fecha_venta, subtotal, extras, notas, total, saldo)
+    VALUES (cotizacion_id, fecha_venta, subtotal, extras, notas, total, saldo);
+
+    -- Confirmar la transacción
+    COMMIT;
+END //
+
+DELIMITER ;
+CALL crearVenta(4, 26, 500, 'La pared tiene que ser resanada');
 
 -- consultar id de usuario en base al nombre
 DELIMITER //
@@ -643,3 +1029,54 @@ BEGIN
 END //
 DELIMITER ;
 CALL GetProductoIdByNombre('Persiana Moderna');
+
+/*El procedimiento almacenado para direcciones que se le envía al instalador nada más 
+con nombre del cliente fecha hora y dirección */
+DELIMITER //
+
+CREATE TRIGGER trg_insert_notificacion_instalador
+AFTER UPDATE ON CITAS
+FOR EACH ROW
+BEGIN
+    DECLARE instalador_id INT;
+    DECLARE instalador_nombre VARCHAR(100);
+    DECLARE mensaje VARCHAR(300);
+    DECLARE done INT DEFAULT 0;
+    DECLARE cur CURSOR FOR
+        SELECT u.id_usuario, p.nombre
+        FROM USUARIOS u
+        JOIN PERSONAS p ON u.id_persona = p.id_persona
+        WHERE u.rol = 'instalador';
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = 1;
+
+    -- Verificar si la cita ha sido aceptada y es de tipo 'instalacion'
+    IF NEW.status = 'aceptada' AND OLD.status <> 'aceptada' AND NEW.tipo = 'instalacion' THEN
+        -- Construir el mensaje de notificación
+        SET mensaje = CONCAT('Tiene una cita aceptada con ', NEW.usuario, ' el ', NEW.fecha, ' a las ', NEW.hora, ' en ', (SELECT nombre FROM DIRECCIONES WHERE id_direccion = NEW.direccion));
+
+        -- Abrir el cursor
+        OPEN cur;
+
+        -- Recorrer todos los instaladores y enviar la notificación
+        read_loop: LOOP
+            FETCH cur INTO instalador_id, instalador_nombre;
+            IF done THEN
+                LEAVE read_loop;
+            END IF;
+
+            -- Insertar la notificación para cada instalador
+            INSERT INTO NOTIFICACIONES (tipo, cita, mensaje, usuario, fecha)
+            VALUES ('cita_aceptada', NEW.id_cita, mensaje, instalador_id, NOW());
+        END LOOP;
+
+        -- Cerrar el cursor
+        CLOSE cur;
+    END IF;
+END //
+
+DELIMITER ;
+
+UPDATE CITAS
+SET status = 'aceptada'
+WHERE id_cita = 1;
+SELECT * FROM NOTIFICACIONES;
