@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Glass Store</title>
+<link rel="shortcut icon" href="../img/index/logoVarianteSmall.png" type="image/x-icon">
+<link rel="stylesheet" href="../css/styles.css">
+<link rel="stylesheet" href="../css/normalized.css">
+<link rel="stylesheet" href="../css/bootstrap-5.3.3-dist/css/bootstrap.min.css">
+
+<style>
+    .card-img-left {
+    border-radius: 10px;
+}
+
+.card {
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+@media (max-width: 768px) {
+    .buttonPerfilProductocancelar{
+        margin-left: 0 !important;
+        text-align: center;
+    }
+
+}
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+    -webkit-appearance: none;
+    margin: 0; 
+}
+
+
+input[type=number] {
+    -moz-appearance: textfield;
+}
+
+/* Aplicar el estilo a todos los inputs de número en la página */
+input[type=number] {
+    appearance: none; 
+}
+
+.icon-overlay-container-fav {
+    position: absolute;
+    bottom: 10px; /* Ajusta la distancia desde el borde inferior */
+    right: 10px; /* Ajusta la distancia desde el borde derecho */
+    cursor: pointer;
+    background-color: rgba(255, 255, 255, 0.8); /* Opcional: Fondo blanco semitransparente */
+    border-radius: 50%;
+    padding: 5px;
+}
+
+.card {
+    position: relative; /* Necesario para que el ícono se posicione correctamente dentro de la tarjeta */
+}
+
+.icon-overlay-fav {
+    width: 25px; /* Ajusta el tamaño del ícono */
+    height: 25px;
+}
+
+</style>
+</head>
+
+<body>
+<!-- whatsapp flotante -->
+<div id="wa-button">
+    <a href="https://api.whatsapp.com/send?phone=528717843809" target="_blank">
+      <img src="../img/index/whatsappFloat.svg" alt="Contáctanos por WhatsApp">
+    </a>
+  </div>
+  <!-- segunda barra -->
+  <nav class="navbar sticky-top navbar-expand-md" id="navbar-color">
+    <div class="container-fluid">
+        <!-- menú hamburguesa -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar">
+            <span><i><img src="../img/index/menu.svg" alt="Menu" width="30px"></i></span>
+        </button>
+        <div class="offcanvas offcanvas-start" id="offcanvasNavbar">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title">Menú</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+            </div>
+            <div class="offcanvas-body">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link"  href="/productos">Volver</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link nav-left" href="https://api.whatsapp.com/send?phone=528717843809" target="_blank">Contacto</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link nav-left" href="/citas">Agendar</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link nav-left" href="/#about-us">Nosotros</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</nav>
+<div class="container mt-3 d-flex justify-content-end">
+</div>
+ <div class="container mt-5" id="product-profile">
+    <div class="row">
+         <div class="col-md-6">
+         <!-- Imagenes del producto -->
+            <div id="carouselProductImages carouselImgInd" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner main-img">
+                    <?php
+                        if (!empty($imagenes)) {
+                            $first = true;
+                            foreach ($imagenes as $img) {
+                                $imagePath = !empty($img->imagen) ? '../img/disenos/' . $img->imagen : '../img/index/default.png';
+                                $activeClass = $first ? 'active' : '';
+                                echo "<div class='carousel-item $activeClass'>
+                                    <img src='" . htmlspecialchars($imagePath) . "' class='img-fluid h-100' alt='Imagen del Producto' style='object-fit: cover;'>
+                                    </div>";
+                                $first = false;
+                             }
+                         } else {
+                                echo "<div class='carousel-item active'>
+                                    <img src='../img/index/default.png' class='img-fluid' alt='Imagen no disponible'>
+                                    </div>";
+                         }
+                    ?>
+                </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselProductImages" data-bs-slide="prev">
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselProductImages" data-bs-slide="next">
+                        <span class="visually-hidden">Next</span>
+                    </button>
+            </div>
+            <div class="sub-imgs">
+                <?php
+                if (!empty($imagenes)) {
+                    foreach ($imagenes as $img) {
+                        $imagePath = !empty($img->imagen) ? '../img/disenos/' . $img->imagen : '../img/index/default.png';
+                        echo "<div class='container-sub-img'>
+                                <img src='" . htmlspecialchars($imagePath) . "' class='sub-img' alt='Imagen del Producto'>
+                              </div>";
+                    }
+                } else {
+                    echo "<div class='container-sub-img'>
+                            <img src='../img/index/default.png' class='sub-img' alt='Imagen no disponible'>
+                          </div>";
+                }
+                ?>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <!-- Información del producto -->
+            <h1 class="titleProductPerfil"><?php echo htmlspecialchars($producto->nombre); ?></h1>
+            <?php
+  if ($producto->categoria == 3) {
+    echo '<h2 class="precioPerfil">$' . number_format($producto->precio, 2) . ' MXN p/Rollo</h2>';
+}elseif (strpos(strtolower($producto->nombre), 'pasamanos') !== false) {
+    echo '<h2 class="precioPerfil">$' . number_format($producto->precio, 2) . ' MXN m</h2>';
+} else {
+    echo '<h2 class="precioPerfil">$' . number_format($producto->precio, 2) . ' MXN m<sup>2</sup></h2>';
+}
+?>
+
+            <p class="descripcionPerfil"><?php echo htmlspecialchars($producto->descripcion); ?></p>
+           
+            <?php if (!empty($disenos)) : ?>
+                <h5 class="disenosPerfil">Diseños disponibles:</h5>
+                <div class="design-gallery">
+                    <?php foreach ($disenos as $diseno) : ?>
+                        <div class="design-item">
+                            <img src="../img/disenos/<?php echo htmlspecialchars($diseno->file_path); ?>" 
+                                 alt="<?php echo htmlspecialchars($diseno->codigo); ?>" 
+                                 class="design-image" 
+                                 data-id="<?php echo $diseno->id_diseno; ?>">
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+            <?php endif; ?>
+           
+            <div id="cotizacionContainer" class="mt-5">
+    <form id="cotizacionForm" method="POST" action="../scripts/guardarDetalleProducto.php" class="formPerfil">
+        <input type="hidden" name="producto" value="<?php echo $productId; ?>">
+        <input type="hidden" name="diseno" id="diseno">
+        <div class="input-group">
+            <?php if (strpos(strtolower($producto->nombre), 'pasamanos') !== false) : ?>
+                <div class="inputPerfil mb-3">
+                    <label class="labelPerfilProduct" for="largo" class="form-label">Largo (metros)</label>
+                    <input type="number" class="form-control inputPerfilProductoCont" id="largo" name="largo" step="0.01" max="50" required style="">
+                </div>
+            <?php else : ?>
+                <div class="inputPerfil mb-3">
+                    <label class="labelPerfilProduct" for="alto" class="form-label">Alto (metros)</label>
+                    <input type="number" class="form-control inputPerfilProductoCont" id="alto" name="alto" step="0.01" max="10" required>
+                </div>
+                <div class="inputPerfil mb-3">
+                    <label class="labelPerfilProduct" for="ancho" class="form-label">Ancho (metros)</label>
+                    <input type="number" class="form-control inputPerfilProductoCont" id="ancho" name="ancho" step="0.01" max="10" required>
+                </div>
+            <?php endif; ?>
+            <div class="inputPerfil mb-3">
+                <label class="labelPerfilProduct" for="cantidad" class="form-label">Cantidad</label>
+                <input type="number" class="form-control inputPerfilProductoCont" id="cantidad" name="cantidad" max="10" required>
+            </div>
+            <div class="inputPerfil total mb-3">
+                <label class="labelPerfilProduct" for="total" class="form-label">Precio Total</label>
+                <input type="text" class="form-control inputPerfilProductoCont total" id="total" name="total" readonly>
+            </div>
+            <?php if ($categoria === 'persianas') : ?>
+            <div class="inputPerfil mb-3">
+            <label class="labelPerfilProduct" for="color_accesorios">Color de Accesorios</label>
+                <select  name="color_accesorios" id="color_accesorios" class="form-control inputPerfilProductoCont">
+                    <option value="blanco">Blanco</option>
+                    <option value="negro">Chocolate</option>
+                    <option value="gris">Ivory</option>
+                    <!-- Añadir más opciones según sea necesario -->
+                </select>
+                
+            </div>
+        <?php endif; ?>
+        </div>
+
+        <div class="d-grid d-md-flex justify-content-md-between">
+            <button type="submit" class="buttonPerfilProducto mb-2 mb-md-0" style="width: 100%; max-width: 100%;">Guardar Cotización</button>
+            <a href="/productos" class="buttonPerfilProductocancelar" style="max-width: 100%; margin-left:1em; text-decoration: none;">Cancelar</a>
+        </div>
+        
+    </form>
+    <p class="text-muted mt-2 text-center" style="font-size: 0.6rem; margin-top:1px;padding-left:20px; padding-right:20px;">
+        Este es un simulador de cotización. Los precios mostrados son aproximados y están sujetos a cambios y modificaciones. Lamentamos cualquier inconveniente que esto pueda causar. ¡Gracias por su comprensión!. Para más información  <a href="https://api.whatsapp.com/send?phone=528717843809" target="_blank">contáctate.</a>
+    </p>
+</div>
+        </div>
+    </div>
+</div>
+
+<!-- modal notificaciones-->
+<div class="modal fade" id="notificationModal" tabindex="-1" aria-labelledby="notificationModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="notificationModalLabel">Notificaciones</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <?php
+                if (!empty($notificacionesRecientes)) {
+                    foreach ($notificacionesRecientes as $notif) {
+                        echo '<div class="notification">';
+                        echo '<mark><p>' . htmlspecialchars($notif->notificacion) . '</p></mark>';
+                        echo '<small>' . htmlspecialchars($notif->fecha) . '</small>';
+                        echo '</div>';
+                    }
+                } else {
+                    echo '<p>No tienes notificaciones recientes.</p>';
+                }
+                ?>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de Cotizaciones -->
+<div class="modal fade" id="carritoModal" tabindex="-1" aria-labelledby="carritoModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="carritoModalLabel">Cotizaciones</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <?php if (isset($_SESSION["nom_usuario"])): ?>
+                    <!-- Usuario logueado -->
+                    <?php if (!empty($productos_espera)): ?>
+                        <div id="carrito-list" class="row">
+                            <!-- Aquí se cargarán los detalles del carrito -->
+                        </div>
+                    <?php else: ?>
+                       
+                    <?php endif; ?>
+                    <?php else: ?>
+                    <!-- Usuario no logueado -->
+                         <div class="text-center">
+                            <p><a href="../views/iniciarSesion.php">Inicia sesión</a> para ver tus cotizaciones y acceder a ellas cuando quieras. ¡ <a href="/register">Crea tu cuenta</a> y disfruta de una experiencia personalizada!</p>
+                        </div>
+                    <?php endif; ?>
+                </div>
+            <div class="modal-footer">
+            <?php if (isset($_SESSION["nom_usuario"]) && !empty($productos_espera)): ?>
+                <button type="button" id="aceptar-btn" class="btn btn-primary">Aceptar</button>
+                <button type="button" id="limpiar-btn" class="btn btn-danger">Limpiar</button>
+            <?php endif; ?>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de Favoritos -->
+<div class="modal fade" id="favoritosModal" tabindex="-1" aria-labelledby="favoritosModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="favoritosModalLabel">Mis Favoritos</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <?php if (isset($_SESSION["nom_usuario"])): ?>
+                    <!-- Usuario logueado -->
+                    <p class="text-center">Guarda tus productos favoritos y accede a ellos en cualquier momento.</p>
+                    <div id="favoritos-list" class="row">
+                        <!-- Aquí se cargarán los productos favoritos -->
+                    </div>
+                <?php else: ?>
+                    <!-- Usuario no logueado -->
+                    <div class="text-center">
+                        <p><a href="login">Inicia sesión</a> para guardar tus productos favoritos y acceder a ellos cuando quieras. ¡ <a href="/register">Crea tu cuenta</a> y disfruta de una experiencia personalizada!</p>
+                    </div>
+                <?php endif; ?>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="../css/bootstrap-5.3.3-dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const altoInput = document.getElementById('alto');
+    const anchoInput = document.getElementById('ancho');
+    const largoInput = document.getElementById('largo');
+    const cantidadInput = document.getElementById('cantidad');
+    const totalInput = document.getElementById('total');
+    const disenoInput = document.getElementById('diseno');
+    const precioPorMetroCuadrado = <?php echo $producto->precio; ?>;
+
+    let updateTimeout; // Variable para almacenar el temporizador
+
+    function actualizarPrecioTotal() {
+        let total = 0;
+        let cantidad = parseInt(cantidadInput.value) || 0;
+
+        if (largoInput) {
+            let largo = parseFloat(largoInput.value) || 0;
+            largo = Math.max(0, largo);
+            largo = largo > 50 ? 50 : largo;
+            cantidad = cantidad > 10 ? 10 : cantidad;
+            total = largo * precioPorMetroCuadrado * cantidad;
+        } else {
+            let alto = parseFloat(altoInput.value) || 0;
+            let ancho = parseFloat(anchoInput.value) || 0;
+            alto = Math.max(0, alto);
+            ancho = Math.max(0, ancho);
+            cantidad = Math.max(0, cantidad);
+            alto = alto > 50 ? 50 : alto;
+            ancho = ancho > 50 ? 50 : ancho;
+            cantidad = cantidad > 10 ? 10 : cantidad;
+            const metrosCuadrados = alto * ancho;
+            total = metrosCuadrados * precioPorMetroCuadrado * cantidad;
+
+            if ("<?php echo $categoria; ?>" === "tapices") {
+                let metrostapiz = metrosCuadrados * cantidad;
+                if (metrostapiz <= 5) {
+                    total = precioPorMetroCuadrado;
+                } else {
+                    let bloques = Math.ceil(metrostapiz / 5);
+                    total = bloques * precioPorMetroCuadrado;
+                }
+            } else {
+                total = metrosCuadrados * precioPorMetroCuadrado * cantidad;
+            }
+        }
+
+        totalInput.value = total.toFixed(2) + ' MXN';
+    }
+
+    function validarInput(event) {
+        let value = parseFloat(event.target.value);
+
+        // Limpiar el temporizador anterior
+        clearTimeout(updateTimeout);
+
+        // Configurar un nuevo temporizador que actualice el precio después de un breve momento
+        updateTimeout = setTimeout(function() {
+            if (event.target.id === 'cantidad') {
+                // Validación específica para el campo cantidad (solo números enteros)
+                value = parseInt(value);
+                if (isNaN(value) || value <= 0) {
+                    value = 1; // Ajustar el valor mínimo permitido a 1
+                }
+                event.target.value = value; // Asignar el valor entero sin decimales
+            } else {
+                // Validación para los campos de medidas
+                if (isNaN(value) || value <= 0) {
+                    value = 0.01; // Ajustar el valor mínimo permitido a 0.01
+                }
+
+                // Redondear a dos decimales si es necesario
+                const partes = value.toString().split('.');
+                if (partes.length > 1 && partes[1].length > 2) {
+                    partes[1] = partes[1].slice(0, 2);
+                    value = parseFloat(partes.join('.'));
+                }
+                event.target.value = value.toFixed(2); // Mostrar el valor redondeado con dos decimales
+            }
+            actualizarPrecioTotal();
+        }, 700); 
+    }
+
+    // Asociar el evento 'input' a todos los campos de entrada relevantes
+    if (altoInput) altoInput.addEventListener('input', validarInput);
+    if (anchoInput) anchoInput.addEventListener('input', validarInput);
+    if (largoInput) largoInput.addEventListener('input', validarInput);
+    cantidadInput.addEventListener('input', validarInput);
+    const designImages = document.querySelectorAll('.design-image');
+    if (designImages.length > 0) {
+        // Seleccionar automáticamente el primer diseño
+        designImages[0].classList.add('selected');
+        disenoInput.value = designImages[0].getAttribute('data-id');
+    }
+    designImages.forEach(function(image) {
+        image.addEventListener('click', function() {
+            designImages.forEach(function(img) {
+                img.classList.remove('selected');
+            });
+            image.classList.add('selected');
+            disenoInput.value = image.getAttribute('data-id');
+        });
+    });
+
+    document.querySelectorAll('.design-image').forEach(function(image) {
+        image.addEventListener('click', function() {
+            document.querySelectorAll('.design-image').forEach(function(img) {
+                img.classList.remove('selected');
+            });
+            image.classList.add('selected');
+            disenoInput.value = image.getAttribute('data-id');
+        });
+    });
+});
+
+  // Cargar carrito cuando el modal es mostrado
+  $(document).ready(function() {
+        $('#carritoModal').on('shown.bs.modal', function () {
+            cargarCarrito();
+        });
+
+        $('#aceptar-btn').on('click', function() {
+            actualizarEstadoProductos();
+        });
+
+        function cargarCarrito() {
+    $.ajax({
+        url: '../scripts/obtener_carrito.php',
+        method: 'GET',
+        dataType: 'json',
+        success: function(carrito) {
+            var carritoList = $('#carrito-list');
+            carritoList.empty();
+            if (carrito.length > 0) {
+                carrito.forEach(function(item) {
+                    var imagen = item.imagen_producto ? '../img/disenos/' + item.imagen_producto : '../img/disenos/default.png';
+
+                    // Concatenar las propiedades en una sola línea
+                    var descripcion = [];
+                    if (item.alto) descripcion.push('Alto: ' + item.alto);
+                    if (item.largo) descripcion.push('Largo: ' + item.largo);
+                    if (item.cantidad) descripcion.push('Cantidad: ' + item.cantidad);
+                    if (item.monto) descripcion.push('Monto: ' + item.monto);
+                    if (item.grosor) descripcion.push('Grosor: ' + item.grosor);
+                    if (item.codigo_diseno) descripcion.push('Diseño: ' + item.codigo_diseno);
+                    if (item.marco) descripcion.push('Accesorios: ' + item.marco);
+                    if (item.monto) descripcion.push('Monto: $' + item.monto);
+
+                    
+                    
+                    var descripcionProducto = descripcion.join(', ');
+
+                    var productoHtml = `
+                        <div class='col-md-12 mt-3 py-3 py-md-0'>
+                            <div class='card shadow' style='display: flex; flex-direction: row;padding:1em 1em;'>
+                                <input type='checkbox' class='form-check-input align-self-center producto-checkbox' value='${item.id_detalle_producto}' style='margin-right: 9px;'>
+                                <img src='${imagen}' alt='${item.nombre_producto}' class='card-img-left' style='width: 150px; height: 150px;'>
+                                <div class='card-body'>
+                                    <h5 class='card-title'>${item.nombre_producto}</h5>
+                                    <p class='card-text'>${descripcionProducto}</p>
+                                </div>
+                            </div>
+                        </div>`;
+                    carritoList.append(productoHtml);
+                });
+            } else {
+                carritoList.append(` <div class='text-center'>
+                ¿Aún no has solicitado una cotización? <a href='/productos'style='color: #007bff;'>¡Cotiza ahora!</a> y transforma tu espacio con nuestros productos.
+                </div>`);
+            }
+        },
+        error: function(error) {
+            console.error('Error al obtener los productos del carrito:', error);
+            $('#carrito-list').append("<p>Error al cargar los productos del carrito.</p>");
+        }
+    });
+}
+        function actualizarEstadoProductos() {
+            $('.producto-checkbox:checked').each(function() {
+                var idDetalleProducto = $(this).val();
+                $.ajax({
+                    url: '../scripts/actualizar_carrito.php',
+                    method: 'POST',
+                    data: { id_detalle_producto: idDetalleProducto },
+                    success: function(response) {
+                        console.log('Producto actualizado:', response);
+                        window.location.href = '/citas';
+                    },
+                    error: function(error) {
+                        console.error('Error al actualizar el producto:', error);
+                    }
+                });
+            });
+        }
+    });
+
+function changeIcon(element, id_producto) {
+    <?php if (!isset($_SESSION["nom_usuario"])): ?>
+        // Redirigir a la página de inicio de sesión si el usuario no está logueado
+        window.location.href = "/login";
+    <?php else: ?>
+        var icon = element.querySelector('.icon-overlay');
+        var isFavorite = icon.getAttribute('src') === '../img/index/heartCover.svg';
+        if (isFavorite) {
+            icon.setAttribute('src', '../img/index/addFavorites.svg');
+        } else {
+            icon.setAttribute('src', '../img/index/heartCover.svg');
+        }
+        saveToFavorites(id_producto);
+    <?php endif; ?>
+}
+
+function saveToFavorites(id_producto) {
+    $.ajax({
+        url: '../scripts/guardar_favorito.php',
+        method: 'POST',
+        data: { id_producto: id_producto },
+        success: function(response) {
+            console.log(response);
+        },
+        error: function(error) {
+            console.error('Error:', error);
+        }
+    });
+}
+     // Cargar favoritos cuando el modal es mostrado
+     $('#favoritosModal').on('shown.bs.modal', function () {
+        cargarFavoritos();
+    });
+
+    // Función para cargar favoritos
+    function cargarFavoritos() {
+    <?php if (isset($_SESSION["nom_usuario"])): ?>
+        $.ajax({
+            url: '../scripts/obtener_favoritos.php',
+            method: 'GET',
+            dataType: 'json',
+            success: function(favoritos) {
+                var favoritosList = $('#favoritos-list');
+                favoritosList.empty();
+                if (favoritos.length > 0) {
+                    favoritos.forEach(function(favorito) {
+                        var imagen = favorito.imagen ? '../img/disenos/' + favorito.imagen : '../img/index/default.png';
+                        var iconoFavorito = '../img/index/heartCover.svg';
+
+                        var favoritoHtml = `
+                           <div class='col-md-3 mt-3 py-3 py-md-0 product-item' id='favorito-${favorito.id_producto}'>
+                                <div class='card shadow'>
+                                    <a href='/productos/?id=${favorito.id_producto}' style='text-decoration: none; color: inherit;'>
+                                        <img src='${imagen}' alt='${favorito.nombre}' class='card-img-top'>
+                                        <div class='card-body'>
+                                            <h5 class='card-title'>${favorito.nombre}</h5>
+                                            <p class='card-text'>$${favorito.precio}</p>
+                                        </div>
+                                    </a>
+                                    <div class='icon-overlay-container-fav' onclick='eliminarFavoritoDesdeModal(${favorito.id_producto})'>
+                                        <img src='${iconoFavorito}' alt='Remove Favorite Icon' class='icon-overlay-fav'>
+                                    </div>
+                                </div>
+                            </div>`;
+
+                        favoritosList.append(favoritoHtml);
+                    });
+                } else {
+                    favoritosList.append("<p class='text-center'>No tienes productos en favoritos.</p>");
+                }
+            },
+            error: function(error) {
+                console.error('Error al obtener los favoritos:', error);
+                $('#favoritos-list').append("<p>Error al cargar los favoritos.</p>");
+            }
+        });
+    <?php else: ?>
+        var favoritosList = $('#favoritos-list');
+        favoritosList.empty();
+        favoritosList.append("<p>No tienes favoritos, por favor inicia sesión.</p>");
+    <?php endif; ?>
+}
+
+   $(document).ready(function() {
+    $('#limpiar-btn').on('click', function() {
+        $('.producto-checkbox:checked').each(function() {
+            var idDetalleProducto = $(this).val();
+            var card = $(this).closest('.card'); // Guardar referencia al elemento de la tarjeta para eliminarlo
+
+            $.ajax({
+                url: '../scripts/desactivar_cotizacion.php', // Archivo PHP que manejará la desactivación
+                method: 'POST',
+                data: { id_detalle_producto: idDetalleProducto },
+                success: function(response) {
+                    console.log('Producto desactivado:', response);
+                    card.remove(); // Eliminar la tarjeta del DOM
+                },
+                error: function(error) {
+                    console.error('Error al desactivar el producto:', error);
+                }
+            });
+        });
+    });
+});
+
+function eliminarFavoritoDesdeModal(id_producto) {
+    $.ajax({
+        url: '../scripts/guardar_favorito.php',
+        method: 'POST',
+        data: { id_producto: id_producto },
+        success: function(response) {
+            if (response.mensaje === 'Producto eliminado de favoritos.') {
+                // Eliminar el producto del modal de favoritos
+                $('#favorito-' + id_producto).remove();
+
+                // Opcional: Mostrar un mensaje si ya no hay más favoritos
+                if ($('#favoritos-list').children().length === 0) {
+                    $('#favoritos-list').append("<p class='text-center'>No tienes productos en favoritos.</p>");
+                }
+            } else if (response.error) {
+                console.error('Error:', response.error);
+            }
+        },
+        error: function(error) {
+            console.error('Error:', error);
+        }
+    });
+}
+$('#favoritosModal').on('hidden.bs.modal', function () {
+        location.reload(); // Recarga la página al cerrar el modal
+    });
+
+
+</script>
+</body>
+</html>
