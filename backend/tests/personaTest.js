@@ -1,15 +1,16 @@
-const Persona = require('../models/persona.js');
+const PersonaValidator = require('../validators/personaValidator.js');
+const personaValidator = new PersonaValidator();
 
-async function createPerson(){
-    const newPerson = await Persona.create({
-        usuario: 1,
-        nombres: 'Juan',
-        apellido_p: 'Perez',
-        apellido_m: 'Lopez',
-        correo: 'juan@gmailcom',
-        telefono: '1234567890'});
-        
-        console.log(newPerson);
-}
+// Test 1: validateNewPersona
+const personaData = {
+    usuario: 1,
+    nombres: 'Juan',
+    apellido_p: 'Perez',
+    apellido_m: 'Lopez',
+    correo: 'juan@fff.com',
+    telefono: '2345678901'}
 
-createPerson();
+const validatorOutput = personaValidator.validateNewPersona(personaData);
+
+console.log(validatorOutput);
+

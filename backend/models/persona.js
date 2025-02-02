@@ -1,9 +1,11 @@
-const { Sequelize, DataTypes } = require('sequelize');
+const { Model, DataTypes } = require('sequelize');
 const MySQL = require('../utils/database.js');
+const Usuarios = require('./usuarios.js');
 
-const sequelize = MySQL.getSequelize;
+class Persona extends Model {}
 
-const Persona = sequelize.define('Persona', {
+
+Persona.init({
     id_persona: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -14,7 +16,7 @@ const Persona = sequelize.define('Persona', {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-            model: 'usuarios',
+            model: Usuarios,
             key: 'id_usuario'
         }
     },
@@ -41,9 +43,11 @@ const Persona = sequelize.define('Persona', {
         unique: true
     }
 }, {
-    sequelize: sequelize,
+    sequelize: MySQL.getSequelize,
     tableName: 'persona',
     timestamps: false
 });
+
+Persona.belongsTo(Usuarios);
 
 module.exports = Persona;
