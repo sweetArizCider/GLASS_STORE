@@ -48,6 +48,6 @@ Persona.init({
     timestamps: false
 });
 
-Persona.belongsTo(Usuarios);
+Persona.belongsTo(Usuarios , { foreignKey: 'id_usuario', as: 'usuarioDetails' });
 
 module.exports = Persona;

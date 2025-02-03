@@ -10,7 +10,14 @@ class PersonaValidator {
             correo: Joi.string().email().max(70).required(),
             telefono: Joi.string().length(10).required()
         });
-        return schema.validate(personaData);
+
+        const { error, value } = schema.validate(personaData);
+
+        if (error) {
+            return error;
+        }
+
+        return value;
     }
 }
 
