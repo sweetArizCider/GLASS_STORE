@@ -39,10 +39,10 @@ Productos.init({
 },
 {
     sequelize: MySQL.getSequelize,
-    tableName: 'producto',
+    tableName: 'productos',
     timestamps: false
 });
 
-Productos.belongsTo(Categorias);
+Productos.belongsTo(Categorias, {foreignKey: 'categoria', as: 'categoriaDetails'});
 
 module.exports = Productos;

@@ -1,6 +1,7 @@
 const express = require('express');
 const { server } = require('./backend/utils/config.json');
 const app = express();
+
 //home
 const homeRouter = require('./backend/routers/home/getHome.js');
 // appointments
@@ -9,8 +10,7 @@ const getUserAppointmentsPageRouter = require('./backend/routers/user/getUserApp
 // login
 const getLoginRouter = require('./backend/routers/login/loginRouter.js');
 // products
-const getProductsPageRouter = require('./backend/routers/products/getProductsPage.js');
-const getProductsProfilePageRouter = require('./backend/routers/products/getProductProfilePage.js');
+const productsRouter = require('./backend/routers/products/productsRouter.js');
 // retgitser
 const registerRouter = require('./backend/routers/register/registerRouter.js');
 // user
@@ -22,9 +22,9 @@ app.use(express.json());
 
 // home
 app.use('/', homeRouter);
+
 // products
-app.use('/', getProductsPageRouter);
-app.use('/productos', getProductsProfilePageRouter);
+app.use('/', productsRouter);
 
 // login
 app.use('/', getLoginRouter);
