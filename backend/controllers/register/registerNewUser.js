@@ -5,6 +5,7 @@ const Persona = require('../../models/persona');
 const Cliente = require('../../models/cliente');
 const UsuariosValidator = require('../../validators/usuariosValidator'); 
 const PersonaValidator = require('../../validators/personaValidator');
+const Rol_Usuario = require('../../models/rol_usuario');
 const bcrypt = require('bcrypt');
 
 class Register {
@@ -21,7 +22,7 @@ class Register {
 
         const transaction = await sequelize.transaction();
 
-        // verify the data and create a new user
+        // verify the data
         const usuarioValidator = new UsuariosValidator();
         const usuarioResult = usuarioValidator.validateNewUsuario({ nom_usuario: nomUsuario,contrasena: contrasena });
         
@@ -30,12 +31,22 @@ class Register {
             return { error: usuarioResult.error };
         }
 
+        // verify if the user already exists
+        const usuarioExists = await Usuarios.findOne({ where: { nom_usuario: nomUsuario } });
+        if (usuarioExists) {
+            await transaction.rollback();
+            return { error: 'El usuario ya existe' };
+        }
+
         // hash the password
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(contrasena, salt);
 
-
+        // create a new usuario
         const newUsuario = await Usuarios.create({ nom_usuario: nomUsuario, contrasena: hashedPassword }, { transaction });
+        
+        // create a default rol for the new usuario
+        const newRolUsuario = await Rol_Usuario.create({ usuario: newUsuario.id_usuario, rol: 1 }, { transaction });
         // get the id of the new usuario
         const usuarioId = newUsuario.id_usuario;
 
@@ -58,7 +69,6 @@ class Register {
 
         await transaction.commit();
         return {newCliente};
-
     }
 }
 

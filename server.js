@@ -7,13 +7,12 @@ const homeRouter = require('./backend/routers/home/getHome.js');
 const getAppointmentsHomeRouter = require('./backend/routers/appointments/getAppointmentsHome.js');
 const getUserAppointmentsPageRouter = require('./backend/routers/user/getUserAppointmentsPage.js');
 // login
-const getLoginRouter = require('./backend/routers/login/getLoginPage.js');
+const getLoginRouter = require('./backend/routers/login/loginRouter.js');
 // products
 const getProductsPageRouter = require('./backend/routers/products/getProductsPage.js');
 const getProductsProfilePageRouter = require('./backend/routers/products/getProductProfilePage.js');
 // retgitser
-const getRegisterRouter = require('./backend/routers/register/getRegisterPage.js');
-const RegisterNewUserRouter = require('./backend/routers/register/registerNewUser.js');
+const registerRouter = require('./backend/routers/register/registerRouter.js');
 // user
 const getUserProfilePageRouter = require('./backend/routers/user/getUserProfilePage.js');
 
@@ -31,8 +30,7 @@ app.use('/productos', getProductsProfilePageRouter);
 app.use('/', getLoginRouter);
 
 // register
-app.use('/', getRegisterRouter);
-app.use('/', RegisterNewUserRouter);
+app.use('/', registerRouter);
 
 // appointments
 app.use('/', getAppointmentsHomeRouter);

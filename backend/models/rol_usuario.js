@@ -40,8 +40,8 @@ Rol_Usuario.init({
     timestamps: false
 });
 
-Rol_Usuario.belongsTo(Roles);
-Rol_Usuario.belongsTo(Usuarios);
+Rol_Usuario.belongsTo(Roles, {foreignKey: 'rol', as:'rolDetails'});
+Rol_Usuario.belongsTo(Usuarios, {foreignKey: 'usuario', as:'usuarioDetails'});
 
 module.exports = Rol_Usuario;
 
