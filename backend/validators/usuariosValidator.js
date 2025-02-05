@@ -7,7 +7,11 @@ class UsuariosValidator {
             contrasena: Joi.string().min(6).pattern(/^(?=.*[!@#$%^&*(),.?":{}|<>]).+$/).max(64).required(),
             estatus: Joi.string().valid('activo', 'inactivo').default('activo').required().optional()
         });
-        return schema.validate(usuarioData);
+        const {error, value} = schema.validate(usuarioData);
+        if (error){
+            return error;
+        }
+        return value;
     }
 }
 

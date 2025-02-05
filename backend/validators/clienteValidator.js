@@ -5,7 +5,11 @@ class ClienteValidator {
         const schema = Joi.object({
             persona: Joi.number().integer().required()
         });
-        return schema.validate(clienteData);
+        const {error, value} = schema.validate(clienteData);
+        if (error){
+            return error;
+        }
+        return value;
     }
 }
 

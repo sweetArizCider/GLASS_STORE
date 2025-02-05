@@ -9,7 +9,11 @@ class ProductosValidator {
             precio: Joi.number().precision(2).required(),
             estatus: Joi.string().valid('activo', 'inactivo').default('activo').optional()
         });
-        return schema.validate(productoData);
+        const {error, value} = schema.validate(productoData);
+        if (error){
+            return error;
+        }
+        return value;
     }
 }
 

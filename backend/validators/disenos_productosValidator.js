@@ -7,7 +7,11 @@ class DisenosProductosValidator {
             producto: Joi.number().integer().required(),
             estatus: Joi.string().valid('activo', 'inactivo').default('activo').required()
         });
-        return schema.validate(disenoProductoData);
+        const {error, value} = schema.validate(disenoProductoData);
+        if (error){
+            return error;
+        }
+        return value;
     }
 }
 

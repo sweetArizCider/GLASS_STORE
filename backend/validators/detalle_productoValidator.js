@@ -18,7 +18,12 @@ class DetalleProductoValidator {
             diseno: Joi.number().integer().optional(),
             invitado_id: Joi.string().max(255).optional()
         });
-        return schema.validate(detalleProductoData);
+        const {error, value} =  schema.validate(detalleProductoData);
+        if (error){
+            return error;
+        }
+        return value;
+
     }
 }
 

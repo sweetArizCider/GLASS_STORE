@@ -7,7 +7,11 @@ class RolUsuarioValidator {
             usuario: Joi.number().integer().required(),
             estatus: Joi.string().valid('activo', 'inactivo').default('activo').required()
         });
-        return schema.validate(rolUsuarioData);
+        const {error, value} = schema.validate(rolUsuarioData);
+        if (error){
+            return error;
+        }
+        return value;
     }
 }
 

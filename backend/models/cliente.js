@@ -25,6 +25,6 @@ Cliente.init({
     timestamps: false
 });
 
-Cliente.belongsTo(Persona , { foreignKey: 'id_persona', as: 'personaDetails' });
+Cliente.belongsTo(Persona , { foreignKey: 'persona', as: 'personaDetails' });
 
 module.exports = Cliente;

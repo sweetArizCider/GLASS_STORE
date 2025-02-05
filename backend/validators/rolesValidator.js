@@ -5,7 +5,11 @@ class RolesValidator {
         const schema = Joi.object({
             nombre_rol: Joi.string().max(50).pattern(/^[a-zA-ZÀ-ÿ\s]+$/).required()
         });
-        return schema.validate(rolData);
+        const {error, value} = schema.validate(rolData);
+        if (error){
+            return error;
+        }
+        return value;
     }
 }
 

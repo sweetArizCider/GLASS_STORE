@@ -14,16 +14,13 @@ router.post('/login', async (req, res) =>{
     const userData = req.body;
     const login = new Login(userData);
     // login the user and save its data
-    try{
+
         const user = await login.loginUser();
         if(user.error){
             return res.status(400).json({error: 'Authentication Error'});
         }
         // send the user data
         return res.status(200).json({userAuthenticated: user});
-    }catch(error){
-        return res.status(500).json({error: 'Internal Server Error', details: error.message});
-    }
 })
 
 

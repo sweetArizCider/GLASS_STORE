@@ -6,7 +6,12 @@ class ImagenValidator {
             imagen: Joi.string().max(255).required(),
             producto: Joi.number().integer().required()
         });
-        return schema.validate(imagenData);
+        const {error, value} = schema.validate(imagenData);
+        if (error){
+            return error;
+        }
+        return value;
+        
     }
 }
 

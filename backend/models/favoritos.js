@@ -35,7 +35,7 @@ Favoritos.init({
     timestamps: false
 })
 
-Favoritos.belongsTo(Cliente);
-Favoritos.belongsTo(Productos)
+Favoritos.belongsTo(Cliente, {foreignKey: 'cliente', as: 'clienteFavorito'});
+Favoritos.belongsTo(Productos, {foreignKey: 'producto', as: 'productoFavorito'});
 
 module.exports = Favoritos;

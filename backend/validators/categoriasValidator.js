@@ -5,7 +5,11 @@ class CategoriasValidator {
         const schema = Joi.object({
             nombre: Joi.string().max(100).pattern(/^[a-zA-ZÀ-ÿ\s]+$/).required()
         });
-        return schema.validate(categoriaData);
+        const { error, value } = schema.validate(categoriaData);
+        if (error) {
+            return error;
+        }
+        return value;
     }
 }
 

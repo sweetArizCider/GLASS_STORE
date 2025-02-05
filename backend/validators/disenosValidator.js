@@ -11,7 +11,11 @@ class DisenosValidator {
             descripcion: Joi.string().max(255).optional(),
             estatus: Joi.string().valid('activo', 'inactivo').default('activo').optional()
         });
-        return schema.validate(disenoData);
+        const {error, value} = schema.validate(disenoData);
+        if (error){
+            return error;
+        }
+        return value;
     }
 }
 

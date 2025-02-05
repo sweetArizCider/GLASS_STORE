@@ -11,6 +11,7 @@ const getUserAppointmentsPageRouter = require('./backend/routers/user/getUserApp
 const getLoginRouter = require('./backend/routers/login/loginRouter.js');
 // products
 const productsRouter = require('./backend/routers/products/productsRouter.js');
+const favoritesRouter = require('./backend/routers/clients/favoritesRouter.js');
 // retgitser
 const registerRouter = require('./backend/routers/register/registerRouter.js');
 // user
@@ -25,6 +26,7 @@ app.use('/', homeRouter);
 
 // products
 app.use('/', productsRouter);
+app.use('/', favoritesRouter);
 
 // login
 app.use('/', getLoginRouter);

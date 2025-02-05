@@ -6,7 +6,11 @@ class FavoritosValidator {
             cliente: Joi.number().integer().required(),
             producto: Joi.number().integer().required()
         });
-        return schema.validate(favoritoData);
+        const {error , value } =  schema.validate(favoritoData);
+        if (error){
+            return error;
+        }
+        return value;
     }
 }
 
