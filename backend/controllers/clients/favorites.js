@@ -1,6 +1,5 @@
 const Favoritos = require('../../models/favoritos');
 const Productos = require('../../models/productos');
-const Usuarios = require('../../models/usuarios');
 const Cliente = require('../../models/cliente');
 const Persona = require('../../models/persona')
 const FavoritosValidator = require('../../validators/favoritosValidator');
